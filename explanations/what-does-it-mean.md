@@ -1,6 +1,12 @@
-# What Does It Mean? (trie)
-[What Does It Mean?](https://open.kattis.com/problems/heritage)
-
+# What Does It Mean?
+Trie  
+[What Does It Mean?](https://open.kattis.com/problems/heritage)  
+## Contents
+1. [Trie Data Structure](#trie-data-structure)
+2. [Node Class](#node-class)
+3. [Trie Class](#trie-class)
+4. [Example](#example)
+## Trie Data Structure
 We can use a _trie_ to store our dictionary of words and the number of meaning each word corresponds to. This allows us to iterate through a name character by character and keep track of all the different word-paths we can take to reach that character.
 
 A [Trie](https://www.geeksforgeeks.org/trie-insert-and-search/) is a tree where the children represent the next element (character) of a pattern (word). When a pattern is finished, the node is marked as an end-node. Patterns are represented as paths of nodes from the root to an end-node.
@@ -104,6 +110,7 @@ if (child_node != nil)  # node is a valid path
         path_meanings % 1,000,000,007   # prevent overflow
         next_table.set(root_node, path_meanings)
 ```
+[back to top](#what-does-it-mean)  
 - - - -
 ## Example
 Dictionary: `hei 2, mark 2, heim 1, ark 2, heima 1`  
@@ -192,5 +199,5 @@ _Explanation_
 8. **return 6**  
 _Explanation_  
 We’ve reached the end of the name and return the value stored in root. The paths `mark` and `ark` still in our table cannot be used because they did not terminate at the end of the name.
-
-_by charlotte_
+  
+[back to top](#what-does-it-mean)

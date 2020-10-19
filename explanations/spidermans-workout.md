@@ -1,6 +1,10 @@
-# Spiderman’s Workout (dynamic programming)
-[Spiderman’s Workout](https://open.kattis.com/problems/spiderman)
-
+# Spiderman’s Workout
+Dynamic Programming  
+[Spiderman’s Workout](https://open.kattis.com/problems/spiderman)  
+## Contents
+1. [Overview](#overview)
+2. [Building the array](#building-the-array)
+3. [Constructing the optimal path](#constructing-the-optimal-path)
 ## Overview
 We’ll use a 2D array to store the minimum building heights for each climb at all possible heights. 
 * Rows represent how many climbs Spiderman has done so far
@@ -80,5 +84,6 @@ else
             col = up_col
     return seq.reverse()
 ```
-
-_by charlotte & kadin_
+  
+_special thanks to kadin_  
+[back to top](#spidermans-workout)

@@ -1,6 +1,12 @@
-# XOR Equation (brute force)
+# XOR Equation
+Brute Force  
 [XOR Equation](https://open.kattis.com/problems/xorequation)  
-
+## Contents
+1. [Why brute force works](#why-brute-force-works)
+2. [Overview](#overview)
+3. [Finding Permutations](#finding-permutations)
+4. [Checking if an integer matches the input](#checking-if-an-integer-matches-the-input)
+5. [Notes](#notes)
 ## Why brute force works
 Notice the 7 second CPU time limit, which is _very_ long! There are also at most 10 ‘?’ characters split among 3 numbers. We can save exponential time by only using brute force on the numbers with the fewest ‘?’ characters.
 The worst-case input-size is with 3 ‘?’ characters in each input, with a runtime of 10^2n = O(2^n). We won’t even need 7 seconds!
@@ -79,5 +85,6 @@ Add an argument to compare using the number of ‘?’ characters
     `std::sort`  
     `template< class RandomIt, class Compare >`  
     `void sort( RandomIt first, RandomIt last, Compare comp )`
-
-_by charlotte & mei_
+  
+_special thanks to mei_  
+[back to top](#xor-equation)
