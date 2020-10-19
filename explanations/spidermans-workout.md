@@ -1,15 +1,24 @@
 # Spiderman’s Workout
+
 Dynamic Programming  
 [Spiderman’s Workout](https://open.kattis.com/problems/spiderman)  
+
 ## Contents
-1. [Overview](#overview)
-2. [Building the array](#building-the-array)
-3. [Constructing the optimal path](#constructing-the-optimal-path)
+
+- [Spiderman’s Workout](#spidermans-workout)
+  - [Contents](#contents)
+  - [Overview](#overview)
+  - [Building the array](#building-the-array)
+  - [Constructing the optimal path](#constructing-the-optimal-path)
+
 ## Overview
-We’ll use a 2D array to store the minimum building heights for each climb at all possible heights. 
-* Rows represent how many climbs Spiderman has done so far
-* Columns represent how high Spiderman is after finishing the climb
+
+We’ll use a 2D array to store the minimum building heights for each climb at all possible heights.
+
+- Rows represent how many climbs Spiderman has done so far
+- Columns represent how high Spiderman is after finishing the climb
 Below are blocks of pseudocode preceded by their explanations. The explanations are using the input  `20 20 20 20`, which means 4 climbs each with a distance of 20.
+
 ```ruby
 max_sum = 1000  # from problem
 num_climb
@@ -20,8 +29,11 @@ min_heights[num_climb + 1][max_sum + 1]
 # col = height
 # min_heights[row][col] = minimum height to get to that climb at that height
 ```
+
 - - - -
+
 ## Building the array
+
 1. **Spiderman starts at (0,0) = 0**  
 After doing no climbing, Spiderman ends at height 0 and the maximum building height (MBH) to get there was 0. ez workout
 2. **(1,20) = 20**  
@@ -33,6 +45,7 @@ This is where the dynamic programming kicks in. If Spiderman came from (2,0), he
 From (2,40), Spiderman can also climb up to (3,60) with an MBH of 60. This might lead to the optimal path later on (but not in this example).
 5. **(4,0) = 20 & (4,40) = 40 & (4,40) = 60 & (4,80) = 80**  
 The two options from row 3 are (3,20) = 20 and (3,60) = 60. From either height, Spiderman can climb up or down, leading to once again two ways to get to (4,40). We’ll save (4,0) = 20, (4,40) = 40, and (4,80) = 80 into our array.
+
 ```ruby
 # find min_heights
 Fill min_heights with max_sum   # max_sum means unreachable
@@ -50,8 +63,11 @@ for row in 1..num_climb
         # keep minimum height
         min_heights[row][col] = min(down_height, up_height)
 ```
+
 - - - -
+
 ## Constructing the optimal path
+
 1. **Start from the end: (4,0)**  
 Spiderman has to end on the ground after the last climb, which is (4,0). If this value couldn’t be reached after constructing the array, then there’s no valid workout.
 2. **From (4,0) go back to (3,20)**  
@@ -63,6 +79,7 @@ We had to have climbed down from row 1 to reach (2,0).
 5. **From (1,20) go back to (0,0)**  
 We could have climbed up from (0,0) or down from (0,40) to reach (1,20). Since (1,20) was never reached in our array, the only option is (0,0), which is our start.
 6. **Reverse the sequence to make it front-to-back**
+
 ```ruby
 if min_heights[num_climb][0] == max_sum
     return "IMPOSSIBLE"     # didn't reached the ground

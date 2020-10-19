@@ -1,12 +1,17 @@
-# What Does It Mean?
+# What Does It Mean
+
 Trie  
 [What Does It Mean?](https://open.kattis.com/problems/heritage)  
+
 ## Contents
+
 1. [Trie Data Structure](#trie-data-structure)
 2. [Node Class](#node-class)
 3. [Trie Class](#trie-class)
 4. [Example](#example)
+
 ## Trie Data Structure
+
 We can use a _trie_ to store our dictionary of words and the number of meaning each word corresponds to. This allows us to iterate through a name character by character and keep track of all the different word-paths we can take to reach that character.
 
 A [Trie](https://www.geeksforgeeks.org/trie-insert-and-search/) is a tree where the children represent the next element (character) of a pattern (word). When a pattern is finished, the node is marked as an end-node. Patterns are represented as paths of nodes from the root to an end-node.
@@ -14,6 +19,7 @@ A [Trie](https://www.geeksforgeeks.org/trie-insert-and-search/) is a tree where 
 > Example (slightly different from the sample input)  
 > Dictionary: `hei, mark, heim, ark, mei`  
 > end-nodes are marked with `/ /`  
+
 ```ruby
         =>  a   =>  r   =>  /k/
 
@@ -25,19 +31,26 @@ root    =>  h   =>  e   =>  /i/ =>  /m/
 
 Since the input size for the problem is not too big, we can afford to be inefficient in how we keep track of our multiple paths—my pseudocode uses a hash table. Dynamic programming can be used to make runtime linear to the length of the name; see [Aho-Corasick Algorithm for Pattern Searching](https://www.geeksforgeeks.org/aho-corasick-algorithm-pattern-searching/) for details.
 - - - -
+
 ## Node Class
+
 Nodes only need to store a few instance fields.
 The children are stored in an array the size of the alphabet, one index for each character. If the child does not exist, it will be null.
-```
+
+```ruby
 child_nodes[]
 is_word
 num_meanings
 ```
+
 - - - -
+
 ## Trie Class
+
 Store the root in `root_node`
 
 ### Insert Function
+
 Add a word to this trie by starting from the root and pathing down to the appropriate child. If child was not initialized, that means this word is the first to go down this path.
 
 Words will share paths if they start with the same characters, then branch out once there’s a difference. If a duplicate word is inserted, only the number of meanings from the second word is kept (since they would have identical paths and end-nodes).
@@ -63,7 +76,9 @@ curr_node.num_meanings = num_meanings
 ```
 
 ### Search Function
+
 Use a table to keep track of nodes that reached a character and the cumulative number of paths the node represents.
+
 1. Start from the root with 0 meanings
 2. Iterate through each character in the name
 3. Check the nodes from your table and add to the next character’s table
@@ -73,11 +88,12 @@ Use a table to keep track of nodes that reached a character and the cumulative n
         * Multiply the path’s number of meanings by the child’s number of meanings when adding to the root
 4. Return the number of meanings at the root
     * This represents the number of paths that end at the end of the name
+
 ```ruby
 name        # name we are searching for
 nodes_table # key = node; value = meanings for that node
 
-# start with a new word, 0 meanings    
+# start with a new word, 0 meanings
 nodes_table.add(root_node, 0)
 for each c in name
     next_table # nodes_table for next c
@@ -93,6 +109,7 @@ return nodes_table.contains(root_node) ?
 ```
 
 ### Path Into a node
+
 ```ruby
 child_node  # node to path into
 next_table  # add path here
@@ -110,19 +127,27 @@ if (child_node != nil)  # node is a valid path
         path_meanings % 1,000,000,007   # prevent overflow
         next_table.set(root_node, path_meanings)
 ```
+
 [back to top](#what-does-it-mean)  
 - - - -
+
 ## Example
+
 Dictionary: `hei 2, mark 2, heim 1, ark 2, heima 1`  
 Name: `heimark`
+
 ### Constructing the Trie
+
 end-nodes are marked with their number of meanings
+
 ```ruby
         =>  a   =>  r   =>  k:2
 root    =>  h   =>  e   =>  i:2 =>  m:1 => a:1
         =>  m   =>  a   =>  r   =>  k:2
 ```
+
 ### Searching
+
 0. **start**  
 _table_  
 `root`: `0`
@@ -195,7 +220,7 @@ _Explanation_
         2. multiply by path’s carried 1 meaning
         3. add 2 to root
     4. `ar` -> `k`: carry 1 meaning forwards
-    
+
 8. **return 6**  
 _Explanation_  
 We’ve reached the end of the name and return the value stored in root. The paths `mark` and `ark` still in our table cannot be used because they did not terminate at the end of the name.
