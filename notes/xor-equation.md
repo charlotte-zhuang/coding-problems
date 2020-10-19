@@ -70,17 +70,14 @@ return perm_list
 * Using arrays to store permutations is much faster than using lists
 * You can use your standard library’s sorting function
 Add an argument to compare using the number of ‘?’ characters
-    * [Java](https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/Arrays.html#sort%28T%5B%5D,java.util.Comparator%29)
-
+    * [Java](https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/Arrays.html#sort%28T%5B%5D,java.util.Comparator%29)  
     `Arrays.sort(T[] a, Comparator<? super T> c)`
-    * [Python](https://docs.python.org/3/howto/sorting.html#key-functions)
-
-    `sorted(iterable,key)`
+    * [Python](https://docs.python.org/3/howto/sorting.html#key-functions)  
+    `sorted(iterable,key)`  
     `list.sort(key)`
-    * [C++](https://devdocs.io/cpp/algorithm/sort)
-    
-    `std::sort`
-    `template< class RandomIt, class Compare >`
+    * [C++](https://devdocs.io/cpp/algorithm/sort)  
+    `std::sort`  
+    `template< class RandomIt, class Compare >`  
     `void sort( RandomIt first, RandomIt last, Compare comp )`
 
 _by charlotte & mei_

@@ -1,5 +1,5 @@
 # Spiderman’s Workout (dynamic programming)
-[Spiderman’s Workout – Kattis](https://open.kattis.com/problems/spiderman)
+[Spiderman’s Workout](https://open.kattis.com/problems/spiderman)
 
 ## Overview
 We’ll use a 2D array to store the minimum building heights for each climb at all possible heights. 

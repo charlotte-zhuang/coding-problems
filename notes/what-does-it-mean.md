@@ -116,49 +116,43 @@ root    =>  h   =>  e   =>  i:2 =>  m:1 => a:1
         =>  m   =>  a   =>  r   =>  k:2
 ```
 ### Searching
-0. **start**
-
-_table_
+0. **start**  
+_table_  
 `root`: `0`
 
-1. **h**
-
-_table_
+1. **h**  
+_table_  
 `root` -> `h: 0`
 
-2. **e**
-
-_table_
+2. **e**  
+_table_  
 `h` -> `e: 0`
 
-3. **i**
-
-_table_
+3. **i**  
+_table_  
 `he` -> `root: 2`
 `he` -> `i: 0`
-_Explanation_
+_Explanation_  
     1. Use the word `hei` with 2 meanings, returning to the root to start a new word.
     2. Continue from `he` -> `i` and carry 0 meanings forwards.
 
-4. **m**
-
-_table_
+4. **m**  
+_table_  
 `root` -> `m: 2`
 `hei` -> `root: 1`
 `hei` -> `m: 0`
-_Explanation_
+_Explanation_  
     1. `root` -> `m`: carry 2 meanings forwards
     2. `hei` -> `root`: use the word `heim` with 1 meaning
     3. `hei` -> `m`: carry 0 meanings forwards
 
-5. **a**
-
-_table_
-`m` -> `a: 2`
-`root` -> `a: 1`
-`heim` -> `root: 1`
-`heim` -> `a: 0`
-_Explanation_
+5. **a**  
+_table_  
+`m` -> `a: 2`  
+`root` -> `a: 1`  
+`heim` -> `root: 1`  
+`heim` -> `a: 0`  
+_Explanation_  
     1. `m` -> `a`: carry 2 meanings forwards
     2. `root` -> `a`: carry 1 meaning forwards
     3. `heim` -> `root`: use the word `heima` with 1 meaning
@@ -166,41 +160,38 @@ _Explanation_
     
 _Note_: we still add the path `heima` to the table even though there’s nowhere for it to go. Since we aren’t checking if `a` is a leaf, there may be more children to traverse.
 
-6. **r**
-
-_table_
-`ma` -> `r: 2`
-`a` -> `r: 1`
-`root` -> `nil`
-`heima` -> `nil`
-_Explanation_
+6. **r**  
+_table_  
+`ma` -> `r: 2`  
+`a` -> `r: 1`  
+`root` -> `nil`  
+`heima` -> `nil`  
+_Explanation_  
     1. `ma` -> `r`: carry 2 meanings forwards
     2. `a` -> `r`: carry 1 meaning forwards
     3. `root` -> does not have child `r`
     4. `heima` -> does not have child `r`
 
-7. **k**
-
-_table_
-`mar` -> `root: 4`  _2 · 2 = 4_
-`mar` -> `k: 2`
-`ar` -> `root: 6`  _4 + 1 · 2 = 6 replaces previous root entry_
-`ar` -> `k: 1`
-_Explanation_
-    1. `mar` -> `root`:
+7. **k**  
+_table_  
+`mar` -> `root: 4`  _2 · 2 = 4_  
+`mar` -> `k: 2`  
+`ar` -> `root: 6`  _4 + 1 · 2 = 6 replaces previous root entry_  
+`ar` -> `k: 1`  
+_Explanation_  
+    1. `mar` -> `root`
         1. use the word `mark` with 2 meanings
         2. multiply by path’s carried 2 meanings
         3. store 4 in root
     2. `mar` -> `k`: carry 2 meanings forwards
-    3. `ar` -> `root`: 
+    3. `ar` -> `root`
         1. use the word `ark` with 2 meanings
         2. multiply by path’s carried 1 meaning
         3. add 2 to root
     4. `ar` -> `k`: carry 1 meaning forwards
     
-8. **return 6**
-
-_Explanation_
+8. **return 6**  
+_Explanation_  
 We’ve reached the end of the name and return the value stored in root. The paths `mark` and `ark` still in our table cannot be used because they did not terminate at the end of the name.
 
 _by charlotte_
