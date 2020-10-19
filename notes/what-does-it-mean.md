@@ -130,7 +130,7 @@ _table_
 
 3. **i**  
 _table_  
-`he` -> `root: 2`
+`he` -> `root: 2`  
 `he` -> `i: 0`  
 _Explanation_
     1. Use the word `hei` with 2 meanings, returning to the root to start a new word.
@@ -138,8 +138,8 @@ _Explanation_
 
 4. **m**  
 _table_  
-`root` -> `m: 2`
-`hei` -> `root: 1`
+`root` -> `m: 2`  
+`hei` -> `root: 1`  
 `hei` -> `m: 0`  
 _Explanation_
     1. `root` -> `m`: carry 2 meanings forwards
