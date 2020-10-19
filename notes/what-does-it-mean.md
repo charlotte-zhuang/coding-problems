@@ -132,7 +132,7 @@ _table_
 _table_  
 `he` -> `root: 2`
 `he` -> `i: 0`
-_Explanation_  
+_Explanation_
     1. Use the word `hei` with 2 meanings, returning to the root to start a new word.
     2. Continue from `he` -> `i` and carry 0 meanings forwards.
 
@@ -141,7 +141,7 @@ _table_
 `root` -> `m: 2`
 `hei` -> `root: 1`
 `hei` -> `m: 0`
-_Explanation_  
+_Explanation_
     1. `root` -> `m`: carry 2 meanings forwards
     2. `hei` -> `root`: use the word `heim` with 1 meaning
     3. `hei` -> `m`: carry 0 meanings forwards
@@ -152,7 +152,7 @@ _table_
 `root` -> `a: 1`  
 `heim` -> `root: 1`  
 `heim` -> `a: 0`  
-_Explanation_  
+_Explanation_
     1. `m` -> `a`: carry 2 meanings forwards
     2. `root` -> `a`: carry 1 meaning forwards
     3. `heim` -> `root`: use the word `heima` with 1 meaning
@@ -166,7 +166,7 @@ _table_
 `a` -> `r: 1`  
 `root` -> `nil`  
 `heima` -> `nil`  
-_Explanation_  
+_Explanation_
     1. `ma` -> `r`: carry 2 meanings forwards
     2. `a` -> `r`: carry 1 meaning forwards
     3. `root` -> does not have child `r`
@@ -178,7 +178,7 @@ _table_
 `mar` -> `k: 2`  
 `ar` -> `root: 6`  _4 + 1 · 2 = 6 replaces previous root entry_  
 `ar` -> `k: 1`  
-_Explanation_  
+_Explanation_
     1. `mar` -> `root`
         1. use the word `mark` with 2 meanings
         2. multiply by path’s carried 2 meanings
