@@ -41,7 +41,7 @@ return count
 ```ruby
 perm_list   # list of integer permutations of str_num
 str_num     # string input
-dec_num # integer permutation
+dec_num     # integer permutation
 
 for each c in str_num
     if (c != '?')   # keep filling dec_num
@@ -71,11 +71,14 @@ return perm_list
 * You can use your standard library’s sorting function
 Add an argument to compare using the number of ‘?’ characters
     * [Java](https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/Arrays.html#sort%28T%5B%5D,java.util.Comparator%29)
+
     `Arrays.sort(T[] a, Comparator<? super T> c)`
     * [Python](https://docs.python.org/3/howto/sorting.html#key-functions)
+
     `sorted(iterable,key)`
     `list.sort(key)`
-    * [C++](https://devdocs.io/cpp/algorithm/sort) 
+    * [C++](https://devdocs.io/cpp/algorithm/sort)
+    
     `std::sort`
     `template< class RandomIt, class Compare >`
     `void sort( RandomIt first, RandomIt last, Compare comp )`
