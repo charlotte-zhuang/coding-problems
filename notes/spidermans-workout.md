@@ -7,9 +7,9 @@ We’ll use a 2D array to store the minimum building heights for each climb at a
 * Columns represent how high Spiderman is after finishing the climb
 Below are blocks of pseudocode preceded by their explanations. The explanations are using the input  `20 20 20 20`, which means 4 climbs each with a distance of 20.
 ```ruby
-max_sum = 1000	# from problem
+max_sum = 1000  # from problem
 num_climb
-climb_arr[]		# climb distances (starting index 1)
+climb_arr[]     # climb distances (starting index 1)
 
 min_heights[num_climb + 1][max_sum + 1]
 # row = climb index we are up to
@@ -31,20 +31,20 @@ From (2,40), Spiderman can also climb up to (3,60) with an MBH of 60. This might
 The two options from row 3 are (3,20) = 20 and (3,60) = 60. From either height, Spiderman can climb up or down, leading to once again two ways to get to (4,40). We’ll save (4,0) = 20, (4,40) = 40, and (4,80) = 80 into our array.
 ```ruby
 # find min_heights
-Fill min_heights with max_sum		# max_sum means unreachable
-min_heights[0][0] = 0				# start on the ground
+Fill min_heights with max_sum   # max_sum means unreachable
+min_heights[0][0] = 0           # start on the ground
 
 for row in 1..num_climb
-	for col in 0..max_sum
-		from_row = row - 1
-		# try climbing down
-		from_col = col + climb_arr[col]
-		down_height = min_heights[from_row][from_col]
-		# try climbing up (may increase height)
-		from_col = col + climb_arr[col]
-		up_height = max(min_heights[from_row][from_col], col)
-		# keep minimum height
-		min_heights[row][col] = min(down_height, up_height)
+    for col in 0..max_sum
+        from_row = row - 1
+        # try climbing down
+        from_col = col + climb_arr[col]
+        down_height = min_heights[from_row][from_col]
+        # try climbing up (may increase height)
+        from_col = col + climb_arr[col]
+        up_height = max(min_heights[from_row][from_col], col)
+        # keep minimum height
+        min_heights[row][col] = min(down_height, up_height)
 ```
 - - - -
 ## Constructing the optimal path
@@ -61,24 +61,24 @@ We could have climbed up from (0,0) or down from (0,40) to reach (1,20). Since (
 6. Reverse the sequence to make it front-to-back
 ```ruby
 if min_heights[num_climb][0] == max_sum
-	return "IMPOSSIBLE"		# didn't reached the ground
+    return "IMPOSSIBLE"     # didn't reached the ground
 else
-	seq 		# climb sequence
-	col = 0		# start on the ground
-	for row in num_climb..1
-		from_row = row - 1
-		down_col = col + climb_arr[row]
-		up_col = col - climb_arr[row]
-		down_height = climb_arr[from_row][down_col]
-		up_height = climb_arr[from_row][up_col]
-		# add the better path to seq and update col
-		if down_height < up_height
-			seq.add('D')
-			col = down_col
-		else
-			seq.add('U')
-			col = up_col
-	return seq.reverse()
+    seq         # climb sequence
+    col = 0     # start on the ground
+    for row in num_climb..1
+        from_row = row - 1
+        down_col = col + climb_arr[row]
+        up_col = col - climb_arr[row]
+        down_height = climb_arr[from_row][down_col]
+        up_height = climb_arr[from_row][up_col]
+        # add the better path to seq and update col
+        if down_height < up_height
+            seq.add('D')
+            col = down_col
+        else
+            seq.add('U')
+            col = up_col
+    return seq.reverse()
 ```
 
 _by charlotte & kadin_
