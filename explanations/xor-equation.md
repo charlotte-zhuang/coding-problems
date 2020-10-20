@@ -1,7 +1,7 @@
 # XOR Equation
 
 Brute Force  
-[XOR Equation](https://open.kattis.com/problems/xorequation)  
+[The Problem](https://open.kattis.com/problems/xorequation)
 
 ## Contents
 
@@ -18,15 +18,16 @@ Brute Force
 
 Notice the 7 second CPU time limit, which is _very_ long! There are also at most 10 ‘?’ characters split among 3 numbers. We can save exponential time by only using brute force on the numbers with the fewest ‘?’ characters.
 The worst-case input-size is with 3 ‘?’ characters in each input, with a runtime of 10^2n = Θ(2^n). We won’t even need 7 seconds!
-- - - -
+
+---
 
 ## Overview
 
 1. Sort inputs by the number of ‘?’ characters
 2. Make a list of all possible integers for the first two inputs
 3. XOR each integer from one list to all integers in the other list
-    - We can do this because XOR is its own inverse
-    - x ^ y = z -> y ^ z = x
+   - We can do this because XOR is its own inverse
+   - x ^ y = z -> y ^ z = x
 4. Count the number of pairs that match the third input
 
 ```ruby
@@ -48,15 +49,15 @@ for each num0 in num0_perms
 return count
 ```
 
-- - - -
+---
 
 ## Finding Permutations
 
 1. Convert the input string into an integer
 2. Whenever you hit a ‘?’ character, any digit [0..9] can be a possible permutation for this number
-    1. Loop through each digit
-    2. Recursively find permutations as if the ‘?’ character were replaced by the digit
-    3. After you do the recursion, you can return your list
+   1. Loop through each digit
+   2. Recursively find permutations as if the ‘?’ character were replaced by the digit
+   3. After you do the recursion, you can return your list
 3. When you reach the end of the input string, you’ve found a permutation. Add it to your list and return.
 
 ```ruby
@@ -78,7 +79,7 @@ perm_list.add(dec_num)
 return perm_list
 ```
 
-- - - -
+---
 
 ## Checking if an integer matches the input
 
@@ -91,13 +92,13 @@ return perm_list
 - If the number is 0, that’s not a leading zero
 - The integer should have the same number of digits as the input
 
-- - - -
+---
 
 ## Notes
 
 - Using arrays to store permutations is much faster than using lists
 - You can use your standard library’s sorting function
-Add an argument to compare using the number of ‘?’ characters
+  Add an argument to compare using the number of ‘?’ characters
   - [Java](https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/Arrays.html#sort%28T%5B%5D,java.util.Comparator%29)  
     `Arrays.sort(T[] a, Comparator<? super T> c)`
   - [Python](https://docs.python.org/3/howto/sorting.html#key-functions)  
@@ -107,6 +108,6 @@ Add an argument to compare using the number of ‘?’ characters
     `std::sort`  
     `template< class RandomIt, class Compare >`  
     `void sort( RandomIt first, RandomIt last, Compare comp )`
-  
+
 _special thanks to mei_  
 [back to top](#xor-equation)

@@ -1,8 +1,8 @@
 # Java
 
-These are blocks of code that can be useful for doing coding problems. They might be used as-is, or altered to suite a specific problem.  
-  
-Future me here: I had no idea that my notes were basically a shitty site-map of GeeksforGeeks xd. But I compiled and formatted everything already, and I feel like there’s _some_ value added by curating this list and making the code more suitable for competitive programming. So here it is.  
+These are blocks of code that can be useful for doing coding problems. They might be used as-is, or altered to suite a specific problem.
+
+Future me here: I had no idea that my notes were basically a shitty site-map of GeeksforGeeks xd. But I compiled and formatted everything already, and I feel like there’s _some_ value added by curating this list and making the code more suitable for competitive programming. So here it is.
 
 ## Contents
 
@@ -35,7 +35,7 @@ bw.flush();
 
 ### Fast Reading
 
-I don’t remember where I got this from, but it’s similar to [Rishabh Mahrsee’s code](https://www.geeksforgeeks.org/fast-io-in-java-in-competitive-programming/)  
+I don’t remember where I got this from, but it’s similar to [Rishabh Mahrsee’s code](https://www.geeksforgeeks.org/fast-io-in-java-in-competitive-programming/)
 
 ```java
 static class Reader
@@ -80,20 +80,20 @@ static class Reader
 }
 ```
 
-[back to top](#java)  
+[back to top](#java)
 
 ## Factoring
 
 ### Greatest Common Divisor
 
-[Program to find GCD or HCF of two numbers - GeeksforGeeks](https://www.geeksforgeeks.org/c-program-find-gcd-hcf-two-numbers/)  
+[Program to find GCD or HCF of two numbers - GeeksforGeeks](https://www.geeksforgeeks.org/c-program-find-gcd-hcf-two-numbers/)
 
 ### Prime Factorization
 
 Returns a two-dimensional array with the number’s prime factors and their powers in increasing order. Unused part of the array is left as zeros.  
 `[[factor, power], [factor, power], ..]`  
 The size of the array is log_e(n) + 1 out of convenience. For large numbers, a dynamic array will perform much better.  
-[source](https://www.geeksforgeeks.org/print-all-prime-factors-of-a-given-number/)  
+[source](https://www.geeksforgeeks.org/print-all-prime-factors-of-a-given-number/)
 
 ```java
 static int[][] primeFactors(int num)
@@ -149,9 +149,9 @@ static int[][] primeFactors(int num)
 
 ### Check if a number is prime
 
-[Prime Numbers - GeeksforGeeks](https://www.geeksforgeeks.org/prime-numbers/)  
-  
-[back to top](#java)  
+[Prime Numbers - GeeksforGeeks](https://www.geeksforgeeks.org/prime-numbers/)
+
+[back to top](#java)
 
 ## Sorting
 
@@ -160,7 +160,7 @@ Using `Arrays.sort(arr)` is a very good comparison-based sort, but sometimes you
 ### Merge Sort
 
 Based off of code written by Rajat Mishra.  
-[source](https://www.geeksforgeeks.org/merge-sort/)  
+[source](https://www.geeksforgeeks.org/merge-sort/)
 
 ```java
 static class MergeSort
@@ -223,14 +223,14 @@ static class MergeSort
 }
 ```
 
-[back to top](#java)  
+[back to top](#java)
 
 ## Disjoint Sets Data Structure
 
 A `DSet` represents a disjoint set.  
-`DSStruct.find(DSet a)` will return the representative of `a`.  
-`DSStruct.union(DSet a, DSet b)` will union the two sets (making them have the same representative).  
-I made this myself, but of course there's an amazing article for everything on [GeeksforGeeks](https://www.geeksforgeeks.org/disjoint-set-data-structures/).  
+`DsStruct.find(DSet a)` will return the representative of `a`.  
+`DsStruct.union(DSet a, DSet b)` will union the two sets (making them have the same representative).  
+I made this myself, but of course there's an amazing article for everything on [GeeksforGeeks](https://www.geeksforgeeks.org/disjoint-set-data-structures/).
 
 ```java
 static class DSet
@@ -245,7 +245,7 @@ static class DSet
         }
     }
 
-static class DSStruct
+static class DsStruct
 {
     static DSet find(DSet a)
     {
@@ -274,11 +274,11 @@ static class DSStruct
 }
 ```
 
-[back to top](#java)  
+[back to top](#java)
 
 ## Trie Data Structure
 
-[source](https://www.geeksforgeeks.org/trie-insert-and-search/)  
+[source](https://www.geeksforgeeks.org/trie-insert-and-search/)
 
 ```java
 public class Trie
@@ -306,6 +306,7 @@ public class Trie
     static boolean search(String pattern)
     {
         Node crawl = root;
+
         for (int c = 0; c < pattern.length(); c++)
         {
             int child = pattern.charAt(c) - 'a';
