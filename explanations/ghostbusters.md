@@ -148,10 +148,10 @@ Since the graph is bipartite, I find it easiest to have two arrays of vertices, 
 ```ruby
 #---Input---#
 num_rows, num_cols
-# list of connected row, column pairs from input
-edges
 # the key probability input that we use as an adjacency matrix
 weights[num_rows][num_cols]
+# list of connected row, column pairs from input with their weight
+edges
 
 
 #---Variables---#
@@ -169,7 +169,7 @@ for row in 0..num_rows
 for col in 0..num_cols
   col_vertices[col] = new Vertex()
 # sort edges by decreasing weight
-edges = edges.sort(Reversed)
+edges = edges.sort(Reversed_By_Weight)
 # construct a maximum spanning tree for each connected sub-graph
 for edge in edges
   if find_rep(edge.vertex_u) != find_rep(edge.vertex_v)
@@ -206,6 +206,7 @@ class Vertex
 
 class Edge
   vertex_u, vertex_v
+  weight
 ```
 
 [back to top](#ghostbusters)
