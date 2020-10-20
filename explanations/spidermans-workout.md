@@ -3,13 +3,12 @@
 Dynamic Programming  
 [The Problem](https://open.kattis.com/problems/spiderman)
 
+<!-- omit in toc -->
 ## Contents
 
-- [Spiderman’s Workout](#spidermans-workout)
-  - [Contents](#contents)
-  - [Overview](#overview)
-  - [Building the array](#building-the-array)
-  - [Constructing the optimal path](#constructing-the-optimal-path)
+- [Overview](#overview)
+- [Building the array](#building-the-array)
+- [Constructing the optimal path](#constructing-the-optimal-path)
 
 ## Overview
 

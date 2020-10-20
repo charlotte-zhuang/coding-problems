@@ -3,16 +3,14 @@
 Brute Force  
 [The Problem](https://open.kattis.com/problems/xorequation)
 
+<!-- omit in toc -->
 ## Contents
 
-- [XOR Equation](#xor-equation)
-  - [Contents](#contents)
-  - [Why brute force works](#why-brute-force-works)
-  - [Overview](#overview)
-  - [Finding Permutations](#finding-permutations)
-  - [Checking if an integer matches the input](#checking-if-an-integer-matches-the-input)
-    - [Edge Cases](#edge-cases)
-  - [Notes](#notes)
+- [Why brute force works](#why-brute-force-works)
+- [Overview](#overview)
+- [Finding Permutations](#finding-permutations)
+- [Checking if an integer matches the input](#checking-if-an-integer-matches-the-input)
+- [Notes](#notes)
 
 ## Why brute force works
 
@@ -86,6 +84,7 @@ return perm_list
 1. Check each digit from the integer against each character from the input
 2. The ‘?’ characters from the input can match with anything
 
+<!-- omit in toc -->
 ### Edge Cases
 
 - No leading zeros

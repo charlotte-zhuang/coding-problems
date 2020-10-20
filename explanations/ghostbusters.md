@@ -3,11 +3,14 @@
 Making a Forest with Disjoint Sets  
 [The Problem](https://open.kattis.com/problems/ghostbusters2)
 
+<!-- omit in toc -->
 ## Contents
 
 - [Modelling the problem](#modelling-the-problem)
 - [Overview](#overview)
 - [Constructing a Maximum Spanning Tree](#constructing-a-maximum-spanning-tree)
+  - [Kruskal's Algorithm pseudo-code](#kruskals-algorithm-pseudo-code)
+  - [Disjoint Sets data structure](#disjoint-sets-data-structure)
 - [Constructing the Signal Graph](#constructing-the-signal-graph)
 - [Final pseudo-code](#final-pseudo-code)
 
@@ -17,6 +20,7 @@ We can model the keyboard as a [bipartite graph](https://en.wikipedia.org/wiki/B
 
 The keyboard is a complete bipartite graph because it's rectangular (each row has a key for all columns). We can create a graph of the input signals for each row by only keeping the edges to the columns that received the signal.
 
+<!-- omit in toc -->
 ### Sample Input 2
 
 ```ruby
@@ -29,10 +33,12 @@ The keyboard is a complete bipartite graph because it's rectangular (each row ha
 2 0 2
 ```
 
+<!-- omit in toc -->
 ### Complete Bipartite Graph
 
 ![complete graph image](embeds/ghostbusters/complete-graph.drawio.svg)
 
+<!-- omit in toc -->
 ### Signal Graph
 
 ![signal graph image](embeds/ghostbusters/signal-graph.drawio.svg)
@@ -41,6 +47,7 @@ Since the probability _p_ that a key is pressed is constrained by _0 < p < 0.5_,
 
 Notice, not all rows and columns are connected to each other; the problem's input specifies for each row, which columns the row is connected to (which columns received a signal). The graph may be disconnected, so we'll find a maximum spanning tree for each connected sub-graph, making a forest.
 
+<!-- omit in toc -->
 ### Maximal Forest
 
 ![maximal forest image](embeds/ghostbusters/forest.drawio.svg)  
@@ -51,9 +58,13 @@ Notice, not all rows and columns are connected to each other; the problem's inpu
 
 The high-level steps we'll take to solve this problem are:
 
-1. [Construct the signal graph](#constructing-the-signal-graph)
-2. [Construct a maximum spanning tree for each connected sub-graph](#constructing-a-maximum-spanning-tree)
-3. [Output the resulting forest](#final-pseudo-code)
+- [Modelling the problem](#modelling-the-problem)
+- [Overview](#overview)
+- [Constructing a Maximum Spanning Tree](#constructing-a-maximum-spanning-tree)
+  - [Kruskal's Algorithm pseudo-code](#kruskals-algorithm-pseudo-code)
+  - [Disjoint Sets data structure](#disjoint-sets-data-structure)
+- [Constructing the Signal Graph](#constructing-the-signal-graph)
+- [Final pseudo-code](#final-pseudo-code)
 
 I'll explain step 2 first, then go back to step 1.
 
@@ -120,12 +131,14 @@ union(vertex_v, vertex_u)
 
 ## Constructing the Signal Graph
 
+<!-- omit in toc -->
 ### Constructing the complete bipartite graph
 
 Since the graph is complete, we can efficiently use an [adjacency matrix](https://en.wikipedia.org/wiki/Adjacency_matrix) to store weights. For a bipartite graph, the adjacency matrix can have all vertices from one group on the x-axis, and all vertices from the other group on the y-axis.
 
 In our case, that means storing the keyboard's rows in the rows of the matrix, and the keyboard's columns in the columns of the matrix. The result is a 2-dimensional array that looks exactly like the input, with the weights of the edges being stored inside the array.
 
+<!-- omit in toc -->
 ### The signal graph
 
 Since the graph is bipartite, I find it easiest to have two arrays of vertices, one for the rows and one for the columns. We'll store in the arrays `Vertex` objects to keep track of which tree the `vertex` is in while building the maximal forest.

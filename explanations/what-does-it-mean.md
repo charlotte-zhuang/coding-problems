@@ -3,12 +3,18 @@
 Trie  
 [The Problem](https://open.kattis.com/problems/heritage)
 
+<!-- omit in toc -->
 ## Contents
 
-1. [Trie Data Structure](#trie-data-structure)
-2. [Node Class](#node-class)
-3. [Trie Class](#trie-class)
-4. [Example](#example)
+- [Trie Data Structure](#trie-data-structure)
+- [Node Class](#node-class)
+- [Trie Class](#trie-class)
+  - [Insert Function](#insert-function)
+  - [Search Function](#search-function)
+  - [Path Into Procedure](#path-into-procedure)
+- [Example](#example)
+  - [Constructing the Trie](#constructing-the-trie)
+  - [Searching](#searching)
 
 ## Trie Data Structure
 
@@ -58,7 +64,7 @@ Words will share paths if they start with the same characters, then branch out o
 
 Note that an end-node is not a leaf and can have children. When that happens, it means that a word is fully contained by another word.
 
-> For example, consider ’ten’ and ‘tennis  
+> For example, consider ’ten’ and ‘tennis'  
 > end-nodes are underlined  
 > root -> t -> e -> _n_ -> n -> i -> _s_
 
@@ -110,7 +116,7 @@ return nodes_table.contains(root_node) ?
     nodes_table.get(root_node) : 0
 ```
 
-### Path Into a node
+### Path Into Procedure
 
 ```ruby
 child_node  # node to path into
