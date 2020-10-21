@@ -3,8 +3,7 @@
 Trie  
 [The Problem](https://open.kattis.com/problems/heritage)
 
-<!-- omit in toc -->
-## Contents
+## <!-- omit in toc -->Contents
 
 - [Trie Data Structure](#trie-data-structure)
 - [Node Class](#node-class)
@@ -24,16 +23,9 @@ A [Trie](https://www.geeksforgeeks.org/trie-insert-and-search/) is a tree where 
 
 > Example (slightly different from the sample input)  
 > Dictionary: `hei, mark, heim, ark, mei`  
-> end-nodes are marked with `/ /`
+> end-nodes are squares
 
-```ruby
-        =>  a   =>  r   =>  /k/
-
-root    =>  h   =>  e   =>  /i/ =>  /m/
-
-        =>  m   =>  a   =>   r  =>  /k/
-                =>  e   =>  /i/
-```
+![trie image](embeds/what-does-it-mean/example-trie.drawio.svg)
 
 Since the input size for the problem is not too big, we can afford to be inefficient in how we keep track of our multiple paths—my pseudo-code uses a hash table. Dynamic programming can be used to make runtime linear to the length of the name; see [Aho-Corasick Algorithm for Pattern Searching](https://www.geeksforgeeks.org/aho-corasick-algorithm-pattern-searching/) for details.
 
@@ -65,8 +57,8 @@ Words will share paths if they start with the same characters, then branch out o
 Note that an end-node is not a leaf and can have children. When that happens, it means that a word is fully contained by another word.
 
 > For example, consider ’ten’ and ‘tennis'  
-> end-nodes are underlined  
-> root -> t -> e -> _n_ -> n -> i -> _s_
+> end-nodes are marked with `/ /`  
+> root -> t -> e -> /n/ -> n -> i -> /s/
 
 ```ruby
 word
@@ -147,13 +139,9 @@ Name: `heimark`
 
 ### Constructing the Trie
 
-end-nodes are marked with their number of meanings
+end-nodes are squares and contain their associated number of meanings
 
-```ruby
-        =>  a   =>  r   =>  k:2
-root    =>  h   =>  e   =>  i:2 =>  m:1 => a:1
-        =>  m   =>  a   =>  r   =>  k:2
-```
+![trie image](embeds/what-does-it-mean/walkthrough-trie.drawio.svg)
 
 ### Searching
 

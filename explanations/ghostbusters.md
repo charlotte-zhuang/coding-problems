@@ -3,8 +3,7 @@
 Making a Forest with Disjoint Sets  
 [The Problem](https://open.kattis.com/problems/ghostbusters2)
 
-<!-- omit in toc -->
-## Contents
+## <!-- omit in toc -->Contents
 
 - [Modelling the problem](#modelling-the-problem)
 - [Overview](#overview)
@@ -20,8 +19,7 @@ We can model the keyboard as a [bipartite graph](https://en.wikipedia.org/wiki/B
 
 The keyboard is a complete bipartite graph because it's rectangular (each row has a key for all columns). We can create a graph of the input signals for each row by only keeping the edges to the columns that received the signal.
 
-<!-- omit in toc -->
-### Sample Input 2
+### <!-- omit in toc -->Sample Input 2
 
 ```ruby
 3 3
@@ -33,13 +31,11 @@ The keyboard is a complete bipartite graph because it's rectangular (each row ha
 2 0 2
 ```
 
-<!-- omit in toc -->
-### Complete Bipartite Graph
+### <!-- omit in toc -->Complete Bipartite Graph
 
 ![complete graph image](embeds/ghostbusters/complete-graph.drawio.svg)
 
-<!-- omit in toc -->
-### Signal Graph
+### <!-- omit in toc -->Signal Graph
 
 ![signal graph image](embeds/ghostbusters/signal-graph.drawio.svg)
 
@@ -47,12 +43,11 @@ Since the probability _p_ that a key is pressed is constrained by _0 < p < 0.5_,
 
 Notice, not all rows and columns are connected to each other; the problem's input specifies for each row, which columns the row is connected to (which columns received a signal). The graph may be disconnected, so we'll find a maximum spanning tree for each connected sub-graph, making a forest.
 
-<!-- omit in toc -->
-### Maximal Forest
+### <!-- omit in toc -->Maximal Forest
 
-![maximal forest image](embeds/ghostbusters/forest.drawio.svg)  
+![maximal forest image](embeds/ghostbusters/forest.drawio.svg)
 
-[back to top](#ghostbusters)  
+[back to top](#ghostbusters)
 
 ## Overview
 
@@ -127,19 +122,17 @@ union(vertex_v, vertex_u)
         vertex_u.rank += 1
 ```
 
-[back to top](#ghostbusters)  
+[back to top](#ghostbusters)
 
 ## Constructing the Signal Graph
 
-<!-- omit in toc -->
-### Constructing the complete bipartite graph
+### <!-- omit in toc -->Constructing the complete bipartite graph
 
 Since the graph is complete, we can efficiently use an [adjacency matrix](https://en.wikipedia.org/wiki/Adjacency_matrix) to store weights. For a bipartite graph, the adjacency matrix can have all vertices from one group on the x-axis, and all vertices from the other group on the y-axis.
 
 In our case, that means storing the keyboard's rows in the rows of the matrix, and the keyboard's columns in the columns of the matrix. The result is a 2-dimensional array that looks exactly like the input, with the weights of the edges being stored inside the array.
 
-<!-- omit in toc -->
-### The signal graph
+### <!-- omit in toc -->The signal graph
 
 Since the graph is bipartite, I find it easiest to have two arrays of vertices, one for the rows and one for the columns. We'll store in the arrays `Vertex` objects to keep track of which tree the `vertex` is in while building the maximal forest.
 

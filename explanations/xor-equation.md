@@ -3,8 +3,7 @@
 Brute Force  
 [The Problem](https://open.kattis.com/problems/xorequation)
 
-<!-- omit in toc -->
-## Contents
+## <!-- omit in toc -->Contents
 
 - [Why brute force works](#why-brute-force-works)
 - [Overview](#overview)
@@ -84,8 +83,7 @@ return perm_list
 1. Check each digit from the integer against each character from the input
 2. The ‘?’ characters from the input can match with anything
 
-<!-- omit in toc -->
-### Edge Cases
+### <!-- omit in toc -->Edge Cases
 
 - No leading zeros
 - If the number is 0, that’s not a leading zero
