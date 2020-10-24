@@ -40,7 +40,7 @@ I don’t remember where I got this from, but it’s similar to [Rishabh Mahrsee
 ```java
 static class Reader
 {
-    static BufferedInputStream bi BufferedInputStream bi = new BufferedInputStream(System.in);
+    static BufferedInputStream bi = new BufferedInputStream(System.in);
 
     // scans for the next int
     // ignores signs immediately after a digit
