@@ -4,21 +4,19 @@ These are blocks of code that can be useful for doing coding problems. They migh
 
 Future me here: I had no idea that my notes were basically a shitty site-map of GeeksforGeeks xd. But I compiled and formatted everything already, and I feel like there’s _some_ value added by curating this list and making the code more suitable for competitive programming. So here it is.
 
-## Contents
+## <!-- omit in toc -->Contents
 
-- [Java](#java)
-  - [Contents](#contents)
-  - [Fast I/O](#fast-io)
-    - [Fast Writing](#fast-writing)
-    - [Fast Reading](#fast-reading)
-  - [Factoring](#factoring)
-    - [Greatest Common Divisor](#greatest-common-divisor)
-    - [Prime Factorization](#prime-factorization)
-    - [Check if a number is prime](#check-if-a-number-is-prime)
-  - [Sorting](#sorting)
-    - [Merge Sort](#merge-sort)
-  - [Disjoint Sets Data Structure](#disjoint-sets-data-structure)
-  - [Trie Data Structure](#trie-data-structure)
+- [Fast I/O](#fast-io)
+  - [Fast Writing](#fast-writing)
+  - [Fast Reading](#fast-reading)
+- [Factoring](#factoring)
+  - [Greatest Common Divisor](#greatest-common-divisor)
+  - [Prime Factorization](#prime-factorization)
+  - [Check if a number is prime](#check-if-a-number-is-prime)
+- [Sorting](#sorting)
+  - [Merge Sort](#merge-sort)
+- [Disjoint Sets Data Structure](#disjoint-sets-data-structure)
+- [Trie Data Structure](#trie-data-structure)
 
 ## Fast I/O
 
@@ -38,44 +36,42 @@ bw.flush();
 I don’t remember where I got this from, but it’s similar to [Rishabh Mahrsee’s code](https://www.geeksforgeeks.org/fast-io-in-java-in-competitive-programming/)
 
 ```java
-static class Reader
-{
-    static BufferedInputStream bi = new BufferedInputStream(System.in);
+static class Reader {
+    static BufferedInputStream bi;
+
+    Reader() {
+      bi = new BufferedInputStream(System.in);
+    }
 
     // scans for the next int
     // ignores signs immediately after a digit
     // returns 0 at the end of the file
-    static int scanInt()
-    {
-        try
-        {
-            int input = bi.read();
-            int output = 0;
-            int sign = 1;
+    static int scanInt() {
+      try {
+        int input = bi.read();
+        int output = 0;
+        int sign = 1;
 
-            // keep reading until a number or sign is reached
-            while (!((input >= '0' && input <= '9') || input == '-' || input == -1))
-                input = bi.read();
-            if (input == -1) // EOF
-                return 0;
+        // keep reading until a number or sign is reached
+        while (!((input >= '0' && input <= '9') || input == '-' || input == -1))
+          input = bi.read();
+        if (input == -1) // EOF
+          return 0;
 
-            // read the number
-            if (input == '-')
-            {
-                sign = -1;
-                input = bi.read();
-            }
-            while (input >= '0' && input <= '9')
-            {
-                output *= 10;
-                output += input - '0';
-                input = bi.read();
-            }
-            return output * sign;
-        } catch (IOException e)
-        {
-            return 0;
+        // read the number
+        if (input == '-') {
+          sign = -1;
+          input = bi.read();
         }
+        while (input >= '0' && input <= '9') {
+          output *= 10;
+          output += input - '0';
+          input = bi.read();
+        }
+        return output * sign;
+      } catch (IOException e) {
+        return 0;
+      }
     }
 }
 ```
