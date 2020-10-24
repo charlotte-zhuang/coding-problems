@@ -46,7 +46,7 @@ static class Reader {
     // scans for the next int
     // ignores signs immediately after a digit
     // returns 0 at the end of the file
-    static int scanInt() {
+    int scanInt() {
       try {
         int input = bi.read();
         int output = 0;
