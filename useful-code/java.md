@@ -15,6 +15,7 @@ These are blocks of code that can be useful for doing coding problems. They migh
   - [Merge Sort](#merge-sort)
   - [Quicksort (Lomuto Partition)](#quicksort-lomuto-partition)
   - [Quicksort (Hoare's Partition)](#quicksort-hoares-partition)
+  - [Counting Sort](#counting-sort)
   - [Radix Sort (with Division)](#radix-sort-with-division)
   - [Radix Sort (with Bitwise Operations)](#radix-sort-with-bitwise-operations)
 - [Selection](#selection)
@@ -230,7 +231,7 @@ static List<int[]> primeFactors(int num) {
     int power = 0;
     do {
       power++;
-      num >>= 1;
+      num >>>= 1;
     } while ((num & 1) == 0);
     factors.add(new int[] { 2, power });
   }
@@ -239,10 +240,10 @@ static List<int[]> primeFactors(int num) {
     // while pf divides num, increment power and divide num
     if (num % pf == 0) {
       int power = 0;
-      while (num % pf == 0) {
+      do {
         power++;
         num /= pf;
-      }
+      } while (num % pf == 0);
       factors.add(new int[] { pf, power });
     }
   }
@@ -267,32 +268,33 @@ Using `Arrays.sort(arr)` is a very good comparison-based sort, but sometimes you
 ### Merge Sort
 
 This code uses a top-down merge sort with a temporary array for copying elements and a check if elements are already sorted before merging.  
-It can be improved by using insertion sort on small arrays.
+Performance can be improved by reusing the temporary array and by using insertion sort on small arrays, but the improvement is small.  
 
 ```java
 static class MergeSort {
+
   /**
-   * Sorts an array using merge sort.
+   * Sorts an entire array using merge sort.
    *
    * @param arr The array to be sorted.
    */
   static void sort(int[] arr) {
-    driver(arr, new int[arr.length], 0, arr.length);
+    sort(arr, new int[arr.length], 0, arr.length);
   }
 
   /**
-   * Recursively splits an array in half, sorts each half, and merges the halves.
+   * Sorts an array in a specific range using merge sort.
    *
    * @param arr        The array to be sorted.
    * @param temp       An array for copying elements.
    * @param leftBound  The lower bound.
    * @param rightBound The upper bound (not inclusive).
    */
-  static void driver(int[] arr, int[] temp, int leftBound, int rightBound) {
+  static void sort(int[] arr, int[] temp, int leftBound, int rightBound) {
     if (leftBound + 1 < rightBound) {
       int midIndex = (leftBound + rightBound) / 2;
-      driver(arr, temp, leftBound, midIndex);
-      driver(arr, temp, midIndex, rightBound);
+      sort(arr, temp, leftBound, midIndex);
+      sort(arr, temp, midIndex, rightBound);
       merge(arr, temp, leftBound, midIndex, rightBound);
     }
   }
@@ -343,36 +345,36 @@ static class MergeSort {
 ### Quicksort (Lomuto Partition)
 
 This code uses a single-pivot randomized Quicksort with three partitions done in a Lomuto scheme. The third partition contains elements equal to the pivot and grows from the right-hand side of the array.  
-It can be improved by using insertion sort on small arrays. If implementing tail-call optimization, recurse on the smaller partition first.
+Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.  
 
 ```java
 static class Quicksort {
   /**
-   * Sorts an array using Quicksort.
+   * Sorts an entire array using Quicksort.
    *
    * @param arr The array to be sorted.
    */
   static void sort(int[] arr) {
-    driver(arr, 0, arr.length);
+    sort(arr, 0, arr.length);
   }
 
   /**
-   * Recursively partitions and sorts an array.
+   * Sorts an array in a specific range using Quicksort.
    *
    * @param arr        The array to be sorted.
    * @param leftBound  The lower bound.
    * @param rightBound The upper bound (not inclusive).
    */
-  static void driver(int[] arr, int leftBound, int rightBound) {
+  static void sort(int[] arr, int leftBound, int rightBound) {
     if (leftBound + 1 < rightBound) {
       int[] pivots = partition(arr, leftBound, rightBound);
-      driver(arr, leftBound, pivots[0]);
-      driver(arr, pivots[1], rightBound);
+      sort(arr, leftBound, pivots[0]);
+      sort(arr, pivots[1], rightBound);
     }
   }
 
   /**
-   * Partitions an array and sorts around the partition
+   * Partitions an array around a random pivot into 3 partitions.
    *
    * @param arr        The array to be sorted.
    * @param leftBound  The lower bound.
@@ -429,36 +431,36 @@ static class Quicksort {
 ### Quicksort (Hoare's Partition)
 
 This code uses a single-pivot randomized Quicksort with Hoare's partition.  
-It can be improved by using insertion sort on small arrays. If implementing tail-call optimization, recurse on the smaller partition first.
+Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.  
 
 ```java
 static class Quicksort {
   /**
-   * Sorts an array using Quicksort.
+   * Sorts an entire array using Quicksort.
    *
    * @param arr The array to be sorted.
    */
   static void sort(int[] arr) {
-    driver(arr, 0, arr.length);
+    sort(arr, 0, arr.length);
   }
 
   /**
-   * Recursively partitions and sorts an array.
+   * Sorts an array in a specific range using Quicksort.
    *
    * @param arr        The array to be sorted.
    * @param leftBound  The lower bound.
    * @param rightBound The upper bound (not inclusive).
    */
-  static void driver(int[] arr, int leftBound, int rightBound) {
+  static void sort(int[] arr, int leftBound, int rightBound) {
     if (leftBound + 1 < rightBound) {
       int midPoint = partition(arr, leftBound, rightBound);
-      driver(arr, leftBound, midPoint);
-      driver(arr, midPoint, rightBound);
+      sort(arr, leftBound, midPoint);
+      sort(arr, midPoint, rightBound);
     }
   }
 
   /**
-   * Partitions an array and sorts around the partition
+   * Partitions an array around a random pivot.
    *
    * @param arr        The array to be sorted.
    * @param leftBound  The lower bound.
@@ -509,21 +511,67 @@ static class Quicksort {
 
 [back to top](#java)
 
+### Counting Sort
+
+This code will find the range of values in an array to count the number of each element offset by the minimum value. It performs well on data with a range up to about 2^12.  
+
+Performance can be improved by parameterizing the range or by using a guaranteed range that is close to the actual range, but the improvement is small.  
+
+```java
+/**
+ * Sorts an array using counting sort.
+ *
+ * @param arr The array to be sorted.
+ * @return The sorted array.
+ */
+static int[] countingSort(int[] arr) {
+  int[] sorted = new int[arr.length];
+  int upperBound = Integer.MIN_VALUE;
+  int lowerBound = Integer.MAX_VALUE;
+  // find the range of elements
+  for (int elem : arr) {
+    upperBound = Math.max(upperBound, elem);
+    lowerBound = Math.min(lowerBound, elem);
+  }
+  int[] count = new int[upperBound - lowerBound + 1];
+  // find count of each element
+  for (int elem : arr) {
+    int index = elem - lowerBound;
+    count[index]++;
+  }
+  // rebase count
+  for (int j = 1; j < count.length; j++) {
+    count[j] += count[j - 1];
+  }
+  // insert elements into sorted array in reverse order
+  for (int j = arr.length - 1; j >= 0; j--) {
+    int index = arr[j] - lowerBound;
+    count[index]--;
+    sorted[count[index]] = arr[j];
+  }
+  return sorted;
+}
+```
+
+[back to top](#java)
+
 ### Radix Sort (with Division)
 
 This code uses counting sort as a subroutine for radix sort, with a temporary array that alternates with the given array for copying elements.  
-Performance depends on the radix chosen and the magnitudes of the elements.Watch out for overflow when using large a radix.  
+Performance greatly depends on the radix chosen and the magnitudes of the elements. The loop to find the maximum degree can be parameterized to avoid repeating work, but the improvement in performance is small.  
+Watch out for overflow when using large a radix.  
 
 [Radix Sort Performance](../science/radix-sort.md)
 
 ```java
 /**
-  * Sorts an array using radix sort.
-  *
-  * @param arr   The array to be sorted.
-  * @param radix The base for counting sort.
-  */
-static void radixSort(int[] arr, int radix) {
+ * Sorts an array using radix sort.
+ *
+ * @param arr   The array to be sorted.
+ * @param radix The base for counting sort.
+ * @return The sorted array.
+ */
+static int[] radixSort(int[] arr, int radix) {
   int[] temp = new int[arr.length];
   int maxDeg = 0;
   // find maxDeg
@@ -553,11 +601,8 @@ static void radixSort(int[] arr, int radix) {
     arr = temp;
     temp = swap;
   }
-  // copy the final array from arr to temp if the reference of arr and temp were
-  // swapped
-  if ((int) (Math.log(maxDeg) / Math.log(radix)) % 2 == 0) {
-    System.arraycopy(arr, 0, temp, 0, arr.length);
-  }
+  // The reference of arr and temp may have swapped.
+  return arr;
 }
 ```
 
@@ -566,7 +611,7 @@ static void radixSort(int[] arr, int radix) {
 ### Radix Sort (with Bitwise Operations)
 
 This code uses counting sort as a subroutine for radix sort, with a temporary array that alternates with the given array for copying elements. It is written to only handle non-negative integers.  
-Performance depends on the radix chosen and the magnitudes of the elements.  
+Performance greatly depends on the radix chosen and the magnitudes of the elements. The loop to find the maximum shift can be parameterized to avoid repeating work, but the improvement in performance is small.  
 
 [Radix Sort Performance](../science/radix-sort.md)
 
@@ -576,8 +621,9 @@ Performance depends on the radix chosen and the magnitudes of the elements.
  *
  * @param arr The array to be sorted.
  * @param deg The degree of 2 used as the base for counting sort.
+ * @return The sorted array.
  */
-static void radixSort(int[] arr, int deg) {
+static int[] radixSort(int[] arr, int deg) {
   int[] temp = new int[arr.length];
   int radix = 1 << deg;
   int mod = radix - 1;
@@ -610,11 +656,8 @@ static void radixSort(int[] arr, int deg) {
     arr = temp;
     temp = swap;
   }
-  // copy the final array from arr to temp if the reference of arr and temp were
-  // swapped
-  if ((maxShift / deg & 1) == 0) {
-    System.arraycopy(arr, 0, temp, 0, arr.length);
-  }
+  // the reference of arr and temp may have swapped.
+  return arr;
 }
 ```
 
@@ -622,20 +665,22 @@ static void radixSort(int[] arr, int deg) {
 
 ## Selection
 
+[Counting sort](#counting-sort) seems to have great performance on data with a range up to about 2^12.  
+
 ### Quickselect (Lomuto Partition)
 
 This code uses a single-pivot randomized Quickselect with a Lomuto partition.  
-It can be improved by using insertion sort instead of a selection algorithm on small arrays.
+Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.  
 
 ```java
 /**
- * Selects the kth element from an array.
+ * Selects the kth smallest element in an unsorted array.
  *
  * @param arr        The array of elements
  * @param leftBound  The lower bound
  * @param rightBound The upper bound (not inclusive)
- * @param target     The kth element to select
- * @return The kth smallest element
+ * @param target     The kth element to select (from index 0)
+ * @return The kth smallest element (from index 0)
  */
 static int quickselect(int[] arr, int leftBound, int rightBound, int target) {
   int range = rightBound - leftBound;
@@ -663,10 +708,10 @@ static int quickselect(int[] arr, int leftBound, int rightBound, int target) {
   }
   // return the partition that contains the target
   int leftSize = lp - leftBound;
-  if (leftSize >= target) {
+  if (leftSize > target) {
     return quickselect(arr, leftBound, lp, target);
   }
-  if (leftSize + pivotCount >= target) {
+  if (leftSize + pivotCount > target) {
     return pivot;
   }
   return quickselect(arr, lp, rp, target - leftSize - 1);
@@ -691,17 +736,17 @@ static void swap(int[] arr, int a, int b) {
 ### Quickselect (Hoare's Partition)
 
 This code uses a single-pivot randomized Quickselect with Hoare's partition.  
-It can be improved by using insertion sort instead of a selection algorithm on small arrays.
+Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.  
 
 ```java
 /**
- * Selects the kth element from an array.
+ * Selects the kth smallest element in an unsorted array.
  *
  * @param arr        The array of elements
  * @param leftBound  The lower bound
  * @param rightBound The upper bound (not inclusive)
- * @param target     The kth element to select
- * @return The kth smallest element
+ * @param target     The kth element to select (from 0)
+ * @return The kth smallest element (from 0)
  */
 static int quickselect(int[] arr, int leftBound, int rightBound, int target) {
   int range = rightBound - leftBound;
@@ -740,10 +785,10 @@ static int quickselect(int[] arr, int leftBound, int rightBound, int target) {
   // note: lp may have crossed-over into the right partition
   int leftSize = rp - leftBound;
   // return the partition that contains the target
-  if (leftSize - leftCount >= target) {
+  if (leftSize - leftCount > target) {
     return quickselect(arr, leftBound, rp, target);
   }
-  if (leftSize + rightCount >= target) {
+  if (leftSize + rightCount > target) {
     return pivot;
   }
   return quickselect(arr, rp, rightBound, target - leftSize);
