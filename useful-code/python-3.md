@@ -37,6 +37,7 @@ def find(x: DSet) -> DSet:
     Returns:
         DSet: The representative of the disjoint set.
     """
+
     if x is not x.parent:
         x.parent = find(x.parent)
     return x.parent
@@ -49,6 +50,7 @@ def union(a: DSet, b: DSet) -> None:
         a (DSet): The first set to union.
         b (DSet): The second set to union.
     """
+
     a = find(a)
     b = find(b)
     if a is b:
