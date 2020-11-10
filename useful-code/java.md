@@ -268,7 +268,7 @@ Using `Arrays.sort(arr)` is a very good comparison-based sort, but sometimes you
 ### Merge Sort
 
 This code uses a top-down merge sort with a temporary array for copying elements and a check if elements are already sorted before merging.  
-Performance can be improved by reusing the temporary array and by using insertion sort on small arrays, but the improvement is small.  
+Performance can be improved by reusing the temporary array and by using insertion sort on small arrays, but the improvement is small.
 
 ```java
 static class MergeSort {
@@ -345,7 +345,7 @@ static class MergeSort {
 ### Quicksort (Lomuto Partition)
 
 This code uses a single-pivot randomized Quicksort with three partitions done in a Lomuto scheme. The third partition contains elements equal to the pivot and grows from the right-hand side of the array.  
-Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.  
+Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.
 
 ```java
 static class Quicksort {
@@ -431,7 +431,7 @@ static class Quicksort {
 ### Quicksort (Hoare's Partition)
 
 This code uses a single-pivot randomized Quicksort with Hoare's partition.  
-Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.  
+Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.
 
 ```java
 static class Quicksort {
@@ -513,9 +513,9 @@ static class Quicksort {
 
 ### Counting Sort
 
-This code will find the range of values in an array to count the number of each element offset by the minimum value. It performs well on data with a range up to about 2^12.  
+This code will find the range of values in an array to count the number of each element offset by the minimum value. It performs well on data with a range up to about 2^12.
 
-Performance can be improved by parameterizing the range or by using a guaranteed range that is close to the actual range, but the improvement is small.  
+Performance can be improved by parameterizing the range or by using a guaranteed range that is close to the actual range, but the improvement is small.
 
 ```java
 /**
@@ -559,7 +559,7 @@ static int[] countingSort(int[] arr) {
 
 This code uses counting sort as a subroutine for radix sort, with a temporary array that alternates with the given array for copying elements.  
 Performance greatly depends on the radix chosen and the magnitudes of the elements. The loop to find the maximum degree can be parameterized to avoid repeating work, but the improvement in performance is small.  
-Watch out for overflow when using large a radix.  
+Watch out for overflow when using large a radix.
 
 [Radix Sort Performance](../science/radix-sort.md)
 
@@ -611,7 +611,7 @@ static int[] radixSort(int[] arr, int radix) {
 ### Radix Sort (with Bitwise Operations)
 
 This code uses counting sort as a subroutine for radix sort, with a temporary array that alternates with the given array for copying elements. It is written to only handle non-negative integers.  
-Performance greatly depends on the radix chosen and the magnitudes of the elements. The loop to find the maximum shift can be parameterized to avoid repeating work, but the improvement in performance is small.  
+Performance greatly depends on the radix chosen and the magnitudes of the elements. The loop to find the maximum shift can be parameterized to avoid repeating work, but the improvement in performance is small.
 
 [Radix Sort Performance](../science/radix-sort.md)
 
@@ -665,12 +665,12 @@ static int[] radixSort(int[] arr, int deg) {
 
 ## Selection
 
-[Counting sort](#counting-sort) seems to have great performance on data with a range up to about 2^12.  
+[Counting sort](#counting-sort) seems to have great performance on data with a range up to about 2^12.
 
 ### Quickselect (Lomuto Partition)
 
 This code uses a single-pivot randomized Quickselect with a Lomuto partition.  
-Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.  
+Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.
 
 ```java
 /**
@@ -736,7 +736,7 @@ static void swap(int[] arr, int a, int b) {
 ### Quickselect (Hoare's Partition)
 
 This code uses a single-pivot randomized Quickselect with Hoare's partition.  
-Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.  
+Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.
 
 ```java
 /**
@@ -873,7 +873,7 @@ static class DsStruct {
    * Finds a set's representative.
    *
    * @param x The disjoint set that we're searching for.
-   * @return The parent of the disjoint set.
+   * @return The representative of the disjoint set.
    */
   static DSet find(DSet x) {
     if (x != x.parent) {
@@ -883,7 +883,7 @@ static class DsStruct {
   }
 
   /**
-   * Union two sets.
+   * Unions two sets.
    *
    * @param a The first set to union.
    * @param b The second set to union.
@@ -912,19 +912,30 @@ static class DsStruct {
 [source](https://www.geeksforgeeks.org/trie-insert-and-search/)
 
 ```java
-public class Trie {
+/**
+ * A trie data structure.
+ */
+static class Trie {
   static final int ALPHABET_SIZE = 26;
   Node root;
 
   /**
+   * Constructs a trie with an empty root.
+   */
+  Trie() {
+    root = new Node();
+  }
+
+  /**
    * Inserts a pattern into this trie.
    *
-   * @param pattern The patter to be inserted.
+   * @param pattern The pattern to be inserted.
    */
   void insert(String pattern) {
     Node crawl = root;
+    // crawl down the trie, creating new nodes as needed
     for (int c = 0; c < pattern.length(); c++) {
-      int child = pattern.charAt(c) - 'a';
+      int child = index(pattern.charAt(c));
       if (crawl.children[child] == null) {
         crawl.children[child] = new Node();
       }
@@ -938,27 +949,43 @@ public class Trie {
    * Finds a pattern in this trie.
    *
    * @param pattern The pattern to search for.
-   * @return True if pattern is in this trie.
+   * @return True if the pattern is in this trie.
    */
   boolean search(String pattern) {
     Node crawl = root;
+    // crawl down the trie
     for (int c = 0; c < pattern.length(); c++) {
-      int child = pattern.charAt(c) - 'a';
+      int child = index(pattern.charAt(c));
+      // check if the char exists
       if (crawl.children[child] == null) {
         return false;
       }
       crawl = crawl.children[child];
     }
+    // check if the last char is in the pattern and is an end node
     return (crawl != null && crawl.isEndNode);
   }
 
   /**
-   * A Trie Node.
+   * Determines the index of a char in a children array.
+   *
+   * @param c The char to index.
+   * @return The index of c in a children array.
+   */
+  int index(char c) {
+    return c - 'a';
+  }
+
+  /**
+   * A trie node.
    */
   class Node {
     Node[] children;
     boolean isEndNode;
 
+    /**
+     * Constructs an empty node.
+     */
     Node() {
       children = new Node[ALPHABET_SIZE];
       isEndNode = false;
