@@ -80,37 +80,10 @@ class Trie:
 
     ALPHABET_SIZE = 26
 
-    class Node:
-        """A node in a trie.
-
-        Attributes:
-            children (list[{Node, None}]): The characters that are children of
-            this Node.
-            end_node (bool): Indicates if this Node is the end of a pattern.
-        """
-
-        def __init__(self) -> None:
-            """Inits an empty Node."""
-
-            self.children = [None] * Trie.ALPHABET_SIZE
-            self.end_node = False
-
     def __init__(self) -> None:
         """Inits an empty Trie."""
 
         self.root = self.Node()
-
-    def index(self, c: chr) -> int:
-        """Determines the index of a chr in a children array.
-
-        Args:
-            c (chr): The chr to index.
-
-        Returns:
-            int: The index of c in a children array.
-        """
-
-        return ord(c) - ord("a")
 
     def insert(self, pattern: str) -> None:
         """Inserts a pattern into this trie.
@@ -149,6 +122,33 @@ class Trie:
             crawl = crawl.children[child]
         # check if the last chr is in the pattern and is an end node
         return crawl is not None and crawl.end_node
+
+    def index(self, c: chr) -> int:
+        """Determines the index of a chr in a children array.
+
+        Args:
+            c (chr): The chr to index.
+
+        Returns:
+            int: The index of c in a children array.
+        """
+
+        return ord(c) - ord("a")
+
+    class Node:
+        """A node in a trie.
+
+        Attributes:
+            children (list[{Node, None}]): The characters that are children of
+            this Node.
+            end_node (bool): Indicates if this Node is the end of a pattern.
+        """
+
+        def __init__(self) -> None:
+            """Inits an empty Node."""
+
+            self.children = [None] * Trie.ALPHABET_SIZE
+            self.end_node = False
 ```
 
 [back to top](#python-3)
