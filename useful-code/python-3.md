@@ -7,9 +7,13 @@ I'm currently translating all of my Java code into Python, so there's not as muc
 ## <!-- omit in toc -->Contents
 
 - [Disjoint Sets Data Structure](#disjoint-sets-data-structure)
-- [Trie Data Structure](#trie-data-structure)
+- [Trees](#trees)
+  - [Trie Data Structure](#trie-data-structure)
+  - [Fenwick Tree](#fenwick-tree)
 
 ## Disjoint Sets Data Structure
+
+Useful for keeping track of sets of disjoint elements, and performing unions between sets. Time-complexity is _Θ(m lg\*(n))_, where _m_ is the number of operations and _n_ is the number of sets.
 
 This code uses path-compression and union by rank.
 
@@ -23,7 +27,7 @@ class DSet:
     """
 
     def __init__(self) -> None:
-        """Inits DSet as a new set"""
+        """Inits DSet as a new set."""
         self.parent = self
         self.rank = 0
 
@@ -65,7 +69,11 @@ def union(a: DSet, b: DSet) -> None:
 
 [back to top](#python-3)
 
-## Trie Data Structure
+## Trees
+
+### Trie Data Structure
+
+Used to store a dictionary of patterns. Time-complexity is linear in the length of the pattern.
 
 [source (the java code)](https://www.geeksforgeeks.org/trie-insert-and-search/)
 
@@ -149,6 +157,89 @@ class Trie:
 
             self.children = [None] * Trie.ALPHABET_SIZE
             self.end_node = False
+```
+
+[back to top](#python-3)
+
+### Fenwick Tree
+
+A binary indexed tree. Useful for finding the sum of a range of values in an array in logarithmic time. Each node in the tree stores the sum within a range from the index down to the index minus the smallest set bit in the index's binary representation.
+
+> Example  
+> 10 = 0b1010  
+> 2 = 0b0010  
+> 10 - 2 = 8  
+> tree[10] = sum of values[9..10]
+
+```python
+class Fenwick_Tree:
+    """A Fenwick Tree (Binary Indexed Tree).
+
+    Attributes:
+        values (list[int]): The list of values.
+        tree (list[int]): The Fenwick Tree. Indexes are offset by 1.
+    """
+
+    def __init__(self, size: int) -> None:
+        """Inits a fenwick tree with all zero values.
+
+        Args:
+            size (int): The number of values in the tree.
+        """
+
+        self.values = [False] * size
+        self.tree = [0] * (size + 1)
+
+    @classmethod
+    def from_list(cls, values: list[int]) -> object:
+        """Inits a fenwick tree from a list of values.
+
+        Args:
+            values (list[int]): The list of values to store in the tree.
+
+        Returns:
+            object: The fenwick tree.
+        """
+
+        fenwick_tree = cls(len(values))
+        # add all elements from values to the tree
+        for i, value in enumerate(values):
+            fenwick_tree.set(i, value)
+        return fenwick_tree
+
+    def set(self, index: int, value: int) -> None:
+        """Sets the value of an index.
+
+        Args:
+            index (int): The index to set.
+            value (int): The value to set the index to.
+        """
+
+        dif = value - self.values[index]
+        self.values[index] = value
+        # update the value of the index and all successors
+        index += 1
+        while index < len(self.tree):
+            self.tree[index] += dif
+            index += index & (-index)
+
+    def get_sum(self, index: int) -> int:
+        """Gets the sum of values up to an index.
+
+        Args:
+            index (int): The last index to include in the sum.
+
+        Returns:
+            int: The sum of values in the range [0 : index].
+        """
+
+        sum = 0
+        # add the value of the index and all ancestors
+        index += 1
+        while index > 0:
+            sum += self.tree[index]
+            index -= index & (-index)
+        return sum
 ```
 
 [back to top](#python-3)

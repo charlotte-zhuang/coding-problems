@@ -23,7 +23,9 @@ These are blocks of code that can be useful for doing coding problems. They migh
   - [Quickselect (Hoare's Partition)](#quickselect-hoares-partition)
   - [Boyer-Moore Majority Vote](#boyer-moore-majority-vote)
 - [Disjoint Sets Data Structure](#disjoint-sets-data-structure)
-- [Trie Data Structure](#trie-data-structure)
+- [Trees](#trees)
+  - [Trie Data Structure](#trie-data-structure)
+  - [Fenwick Tree](#fenwick-tree)
 
 ## Fast I/O
 
@@ -208,7 +210,8 @@ static class Reader {
 
 ### Prime Factorization
 
-This method has a runtime of O(n^0.5), where n is the size of the factored number.  
+Repeatedly divides a given number to count the factors. Time-complexity is _O(n^0.5)_, where _n_ is the size of the factored number.
+
 It can greatly benefit from a fast prime check, to see if a number has any factors (see below).
 
 ```java
@@ -266,6 +269,8 @@ static List<int[]> primeFactors(int num) {
 Using `Arrays.sort(arr)` is a very good comparison-based sort, but sometimes you need to do it yourself. Also, linear-time sorts.
 
 ### Merge Sort
+
+Recursively splits an array in half, sorts each half, then merges the two sorted halves. Time-complexity is _Θ(n lg(n))_, where _n_ is the size of the array.
 
 This code uses a top-down merge sort with a temporary array for copying elements and a check if elements are already sorted before merging.  
 Performance can be improved by reusing the temporary array and by using insertion sort on small arrays, but the improvement is small.
@@ -343,6 +348,8 @@ static class MergeSort {
 [back to top](#java)
 
 ### Quicksort (Lomuto Partition)
+
+Sorts an array around a pivot into partitions of elements greater than, less than, and equal to the pivot; then recursively sorts each partition. This is not a stable-sort. Average time-complexity is _Θ(n lg(n))_, where _n_ is the size of the array. Worse-case time-complexity is quadratic, but very unlikely. [Hoare's Partition](#quicksort-hoares-partition) generally performs slightly better.
 
 This code uses a single-pivot randomized Quicksort with three partitions done in a Lomuto scheme. The third partition contains elements equal to the pivot and grows from the right-hand side of the array.  
 Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.
@@ -430,6 +437,8 @@ static class Quicksort {
 
 ### Quicksort (Hoare's Partition)
 
+Sorts an array around a pivot into partitions of elements greater than and less than the pivot; then recursively sorts each partition. This is not a stable-sort. Average time-complexity is _Θ(n lg(n))_, where _n_ is the size of the array. Worse-case time-complexity is quadratic, but very unlikely. [A Lomuto Partition](#quicksort-lomuto-partition) generally performs slightly worse.
+
 This code uses a single-pivot randomized Quicksort with Hoare's partition.  
 Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.
 
@@ -513,7 +522,7 @@ static class Quicksort {
 
 ### Counting Sort
 
-This code will find the range of values in an array to count the number of each element offset by the minimum value. It performs well on data with a range up to about 2^12.
+This code will find the range of values in an array to count the number of each element offset by the minimum value. It performs well on data with a range up to about 2^12. Time-complexity is _Θ(n + r)_, where _n_ is the number of elements and _r_ is the range between elements.
 
 Performance can be improved by parameterizing the range or by using a guaranteed range that is close to the actual range, but the improvement is small.
 
@@ -556,6 +565,8 @@ static int[] countingSort(int[] arr) {
 [back to top](#java)
 
 ### Radix Sort (with Division)
+
+Repeated uses counting sort with a given base (radix) from least to most significant digit. Time-complexity is _Θ((n + r) \* log-r(m))_, where _n_ is the size of the array, _r_ is the radix, and _m_ is the maximum element.
 
 This code uses counting sort as a subroutine for radix sort, with a temporary array that alternates with the given array for copying elements.  
 Performance greatly depends on the radix chosen and the magnitudes of the elements. The loop to find the maximum degree can be parameterized to avoid repeating work, but the improvement in performance is small.  
@@ -609,6 +620,8 @@ static int[] radixSort(int[] arr, int radix) {
 [back to top](#java)
 
 ### Radix Sort (with Bitwise Operations)
+
+Repeated uses counting sort with a given base (radix) from least to most significant digit. Time-complexity is _Θ((n + r) \* log-r(m))_, where _n_ is the size of the array, _r_ is the radix, and _m_ is the maximum element.
 
 This code uses counting sort as a subroutine for radix sort, with a temporary array that alternates with the given array for copying elements. It is written to only handle non-negative integers.  
 Performance greatly depends on the radix chosen and the magnitudes of the elements. The loop to find the maximum shift can be parameterized to avoid repeating work, but the improvement in performance is small.
@@ -668,6 +681,8 @@ static int[] radixSort(int[] arr, int deg) {
 [Counting sort](#counting-sort) seems to have great performance on data with a range up to about 2^12.
 
 ### Quickselect (Lomuto Partition)
+
+Uses Quicksort to select the _kth_ element in an unsorted array, as if it were sorted. Average time-complexity is linear in the zie of the array. Worse-case time-complexity is quadratic, but very unlikely.
 
 This code uses a single-pivot randomized Quickselect with a Lomuto partition.  
 Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.
@@ -734,6 +749,8 @@ static void swap(int[] arr, int a, int b) {
 [back to top](#java)
 
 ### Quickselect (Hoare's Partition)
+
+Uses Quicksort to select the _kth_ element in an unsorted array, as if it were sorted. Average time-complexity is linear in the zie of the array. Worse-case time-complexity is quadratic, but very unlikely.
 
 This code uses a single-pivot randomized Quickselect with Hoare's partition.  
 Performance can be greatly improved by using counting sort instead of a selection algorithm on arrays with a limited range of values.
@@ -812,6 +829,8 @@ static void swap(int[] arr, int a, int b) {
 
 ### Boyer-Moore Majority Vote
 
+Finds the element that occurs strictly greater than half of the size of the array (strict majority). Time-complexity is linear in the size of the array.
+
 ```java
 /**
  * Finds an index of the element in an array that has a strict majority.
@@ -849,6 +868,8 @@ static int findMajority(int[] arr) {
 
 ## Disjoint Sets Data Structure
 
+Useful for keeping track of sets of disjoint elements, and performing unions between sets. Time-complexity is _Θ(m lg\*(n))_, where _m_ is the number of operations and _n_ is the number of sets.
+
 This code uses path-compression and union by rank.
 
 ```java
@@ -859,6 +880,9 @@ static class DSet {
   DSet parent;
   int rank;
 
+  /**
+   * Constructs a new disjoint set.
+   */
   DSet() {
     this.parent = this;
     this.rank = 0;
@@ -907,7 +931,11 @@ static class DsStruct {
 
 [back to top](#java)
 
-## Trie Data Structure
+## Trees
+
+### Trie Data Structure
+
+Used to store a dictionary of patterns. Time-complexity is linear in the length of the pattern.
 
 [source](https://www.geeksforgeeks.org/trie-insert-and-search/)
 
@@ -990,6 +1018,85 @@ static class Trie {
       children = new Node[ALPHABET_SIZE];
       isEndNode = false;
     }
+  }
+}
+```
+
+[back to top](#java)
+
+### Fenwick Tree
+
+A binary indexed tree. Useful for finding the sum of a range of values in an array in logarithmic time. Each node in the tree stores the sum within a range from the index down to the index minus the smallest set bit in the index's binary representation.
+
+> Example  
+> 10 = 0b1010  
+> 2 = 0b0010  
+> 10 - 2 = 8  
+> tree[10] = sum of values[9..10]
+
+```java
+/**
+ * A Fenwick Tree (Binary Indexed Tree).
+ */
+static class FenwickTree {
+  int[] values;
+  int[] tree;
+
+  /**
+   * Constructs a fenwick tree with all zero values.
+   *
+   * @param size The number of values in the tree.
+   */
+  FenwickTree(int size) {
+    values = new int[size];
+    tree = new int[size + 1];
+  }
+
+  /**
+   * Constructs a fenwick tree from an array of values.
+   *
+   * @param values The array of values.
+   */
+  FenwickTree(int[] values) {
+    this(values.length);
+    // add all elements from values to the tree
+    for (int i = 0; i < values.length; i++) {
+      set(i, values[i]);
+    }
+  }
+
+  /**
+   * Sets the value of an index.
+   *
+   * @param index The index to be set.
+   * @param value The value to set the index to.
+   */
+  void set(int index, int value) {
+    int dif = value - values[index];
+    values[index] = value;
+    // update the value of the index and all successors.
+    index++;
+    while (index < tree.length) {
+      tree[index] += dif;
+      index += index & (-1 * index);
+    }
+  }
+
+  /**
+   * Gets the sum of values up to an index.
+   *
+   * @param index The last index to include in the sum.
+   * @return The sum of values in the range [0 : index].
+   */
+  int getSum(int index) {
+    int sum = 0;
+    // add the value of the index and all ancestors
+    index++;
+    while (index > 0) {
+      sum += tree[index];
+      index -= index & (-1 * index);
+    }
+    return sum;
   }
 }
 ```
