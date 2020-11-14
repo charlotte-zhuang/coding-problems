@@ -45,9 +45,15 @@ bw.flush();
 Watch out for overflow on the scan double method.
 
 ```java
+/**
+ * Reads quickly.
+ */
 static class Reader {
   BufferedInputStream bi;
 
+  /**
+   * Constructs a reader to read from console.
+   */
   Reader() {
     bi = new BufferedInputStream(System.in);
   }
@@ -276,6 +282,9 @@ This code uses a top-down merge sort with a temporary array for copying elements
 Performance can be improved by reusing the temporary array and by using insertion sort on small arrays, but the improvement is small.
 
 ```java
+/**
+ * Top-down recursive merge sort.
+ */
 static class MergeSort {
 
   /**
@@ -355,6 +364,9 @@ This code uses a single-pivot randomized Quicksort with three partitions done in
 Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.
 
 ```java
+/**
+ * Recursive randomized Quicksort with a Lomuto partition.
+ */
 static class Quicksort {
   /**
    * Sorts an entire array using Quicksort.
@@ -443,6 +455,9 @@ This code uses a single-pivot randomized Quicksort with Hoare's partition.
 Performance can be improved by using insertion sort on small arrays, but the improvement is small. If implementing tail-call optimization, recurse on the smaller partition first.
 
 ```java
+/**
+ * Recursive randomized Quicksort with Hoare's partition.
+ */
 static class Quicksort {
   /**
    * Sorts an entire array using Quicksort.
