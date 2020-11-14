@@ -204,15 +204,15 @@ class Fenwick_Tree:
         fenwick_tree = cls(len(values))
         # add all elements from values to the tree
         for i, value in enumerate(values):
-            fenwick_tree.set(i, value)
+            fenwick_tree.update(i, value)
         return fenwick_tree
 
-    def set(self, index: int, value: int) -> None:
-        """Sets the value of an index.
+    def update(self, index: int, value: int) -> None:
+        """Updates the value of an index.
 
         Args:
-            index (int): The index to set.
-            value (int): The value to set the index to.
+            index (int): The index to be updated.
+            value (int): The value to update the index to.
         """
 
         dif = value - self.values[index]
@@ -223,23 +223,23 @@ class Fenwick_Tree:
             self.tree[index] += dif
             index += index & (-index)
 
-    def get_sum(self, index: int) -> int:
-        """Gets the sum of values up to an index.
+    def count(self, index: int) -> int:
+        """Counts values up to an index.
 
         Args:
-            index (int): The last index to include in the sum.
+            index (int): The last index to include in the count.
 
         Returns:
             int: The sum of values in the range [0 : index].
         """
 
-        sum = 0
+        count = 0
         # add the value of the index and all ancestors
         index += 1
         while index > 0:
-            sum += self.tree[index]
+            count += self.tree[index]
             index -= index & (-index)
-        return sum
+        return count
 ```
 
 [back to top](#python-3)
