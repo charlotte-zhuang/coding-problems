@@ -28,6 +28,7 @@ class DSet:
 
     def __init__(self) -> None:
         """Inits DSet as a new set."""
+
         self.parent = self
         self.rank = 0
 
