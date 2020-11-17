@@ -6,10 +6,137 @@ I'm currently translating all of my Java code into Python, so there's not as muc
 
 ## <!-- omit in toc -->Contents
 
+- [Factoring](#factoring)
+  - [Prove Primality](#prove-primality)
+  - [Miller-Rabin Primality Test](#miller-rabin-primality-test)
 - [Disjoint Sets Data Structure](#disjoint-sets-data-structure)
 - [Trees](#trees)
   - [Trie Data Structure](#trie-data-structure)
   - [Fenwick Tree](#fenwick-tree)
+
+## Factoring
+
+### Prove Primality
+
+The only way to prove that a number is prime is to check smaller numbers for factors. The time-complexity is _O(n^0.5)_. There are shortcuts that can be taken for [special cases](https://en.wikipedia.org/wiki/Primality_test), and probabilistic primality tests perform much better.
+
+```python
+def primality(num: int) -> bool:
+    """Checks if a number is prime.
+
+    Args:
+        num (int): The number to check for primality.
+
+    Returns:
+        bool: Whether the number is prime.
+    """
+
+    if num % 2 == 0:
+        return num == 2
+    if num < 2:
+        return False
+    # check for factors up to the square root of num
+    for f in range(3, int(num ** 0.5)):
+        if num % f == 0:
+            return False
+    return True
+```
+
+[back to top](#python-3)
+
+### Miller-Rabin Primality Test
+
+This is a probabilistic primality test. It will always detect a prime number (no false negatives), but has a false positive rate of at most _4^-k_, where _k_ is the number of repetitions that the test is performed. For large numbers, the accuracy improves to _8^-k_. Time-complexity is _O(k lg^3(n))_, where _k_ is the number of repetitions and _n_ is the tested number.
+
+Performance can be improved by using [specific witnesses](https://en.wikipedia.org/wiki/Miller–Rabin_primality_test#Testing_against_small_sets_of_bases) rather than random ones.
+
+Sources: [Wikipedia](https://en.wikipedia.org/wiki/Miller–Rabin_primality_test), [GeeksforGeeks](https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/?ref=lbp)
+
+```python
+def primality_test(num: int, rep: int) -> bool:
+    """Performs the Miller-Rabin primality test to determine if a number is a
+        probable prime.
+
+    Args:
+        num (int): The number to test for primality.
+        rep (int): The number of repetitions to perform the test.
+
+    Returns:
+        bool: True if the number is a probable prime. False if the number is
+            composite.
+    """
+
+    # handle small cases
+    if num % 2 == 0:
+        return num == 2
+    if num < 9:
+        return num > 1
+    # find d by factoring out all powers of 2
+    d = num - 1
+    r = 0
+    while d & 1 == 0:
+        d >>= 1
+        r += 1
+    # repeat the test for the specified number of repetitions
+    for _ in range(rep):
+        if not test_witness(num, d, r):
+            return False
+    # num is a probable prime
+    return True
+
+
+def test_witness(num: int, d: int, r: int) -> bool:
+    """Tests a number for the Miller-Rabin primality test with a random
+        witness.
+
+    Args:
+        num (int): The number to test for primality.
+        d (int): The number (num - 1) with all powers of 2 removed.
+        r (int): The power of 2 removed to make d, (2 ** r * d == num - 1)
+
+    Returns:
+        bool: Whether the number passed the test.
+    """
+
+    a = random.randint(2, num - 2)
+    x = mod_pow(a, d, num)
+    if x == 1 or x + 1 == num:
+        return True
+    for _ in range(r - 1):
+        x = x * x % num
+        if x + 1 == num:
+            return True
+        # check if x won't change
+        if x == 1:
+            break
+    return False
+
+
+def mod_pow(base: int, exp: int, mod: int) -> int:
+    """Performs exponentiation with modulo.
+
+    Args:
+        base (int): The number to exponentiate.
+        exp (int): The exponent.
+        mod (int): The modulo number.
+
+    Returns:
+        int: The result, (base ** exp % mod)
+    """
+
+    res = 1
+    base %= mod
+    while exp > 0:
+        # multiply res if exp is odd
+        if exp % 2 == 1:
+            res = res * base % mod
+        # square the base if exp is even
+        exp //= 2
+        base = base * base % mod
+    return res
+```
+
+[back to top](#python-3)
 
 ## Disjoint Sets Data Structure
 

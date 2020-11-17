@@ -10,7 +10,8 @@ These are blocks of code that can be useful for doing coding problems. They migh
 - [Factoring](#factoring)
   - [Greatest Common Divisor](#greatest-common-divisor)
   - [Prime Factorization](#prime-factorization)
-  - [Check if a number is prime](#check-if-a-number-is-prime)
+  - [Prove Primality](#prove-primality)
+  - [Miller-Rabin Primality Test](#miller-rabin-primality-test)
 - [Sorting](#sorting)
   - [Merge Sort](#merge-sort)
   - [Quicksort (Lomuto Partition)](#quicksort-lomuto-partition)
@@ -264,9 +265,129 @@ static List<int[]> primeFactors(int num) {
 }
 ```
 
-### Check if a number is prime
+[back to top](#java)
 
-[Prime Numbers - GeeksforGeeks](https://www.geeksforgeeks.org/prime-numbers/)
+### Prove Primality
+
+The only way to prove that a number is prime is to check smaller numbers for factors. The time-complexity is _O(n^0.5)_. There are shortcuts that can be taken for [special cases](https://en.wikipedia.org/wiki/Primality_test), and probabilistic primality tests perform much better.
+
+```java
+/**
+ * Checks if a number is prime.
+ *
+ * @param num The number to check for primality
+ * @return Whether the number is prime.
+ */
+static boolean isPrime(int num) {
+  if (num % 2 == 0) {
+    return num == 2;
+  }
+  if (num < 2) {
+    return false;
+  }
+  for (int f = 3; f < Math.sqrt(num); f++) {
+    if (num % f == 0) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
+[back to top](#java)
+
+### Miller-Rabin Primality Test
+
+This is a probabilistic primality test. It will always detect a prime number (no false negatives), but has a false positive rate of at most _4^-k_, where _k_ is the number of repetitions that the test is performed. For large numbers, the accuracy improves to _8^-k_. Time-complexity is _O(k lg^3(n))_, where _k_ is the number of repetitions and _n_ is the tested number.
+
+Performance can be improved by using [specific witnesses](https://en.wikipedia.org/wiki/Miller–Rabin_primality_test#Testing_against_small_sets_of_bases) rather than random ones.
+
+Sources: [Wikipedia](https://en.wikipedia.org/wiki/Miller–Rabin_primality_test), [GeeksforGeeks](https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/?ref=lbp)
+
+```java
+/**
+ * Performs the Miller-Rabin primality test to determine if a number is a
+ * probable prime.
+ *
+ * @param num The number to test for primality.
+ * @param rep The number of repetitions to perform the test.
+ * @return True if teh number is a probable prime. False if the number is
+ *         composite.
+ */
+static boolean primalityTest(int num, int rep) {
+  // handle small cases
+  if (num % 2 == 0) {
+    return num == 2;
+  }
+  if (num < 9) {
+    return num > 1;
+  }
+  // find d by factoring out all powers of 2
+  int d = num - 1;
+  int r = 0;
+  while ((d & 1) == 0) {
+    d >>>= 1;
+    r++;
+  }
+  // repeat the test for the specified number of repetitions
+  for (int i = 0; i < rep; i++) {
+    if (!testWitness(num, d, r)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * Tests a number for the Miller-Rabin primality test with a random witness.
+ *
+ * @param num The number to test for primality.
+ * @param d   The number (num - 1) with all powers of 2 removed.
+ * @param r   The power of 2 removed to made d, (2 ^ r * d == num - 1)
+ * @return Whether the number passed the test.
+ */
+static boolean testWitness(int num, int d, int r) {
+  int a = 2 + (int) (Math.random() * (num - 3));
+  int x = modPow(a, d, num);
+  if (x == 1 || x + 1 == num) {
+    return true;
+  }
+  for (int i = 1; i < r; i++) {
+    x = x * x % num;
+    if (x + 1 == num) {
+      return true;
+    }
+    // check if x won't change
+    if (x == 1) {
+      break;
+    }
+  }
+  return false;
+}
+
+/**
+ * Performs exponentiation with modulo.
+ *
+ * @param base The number to exponentiate.
+ * @param exp  The exponent.
+ * @param mod  The modulo number.
+ * @return The result, (base ^ exp % mod)
+ */
+static int modPow(int base, int exp, int mod) {
+  int res = 1;
+  base %= mod;
+  while (exp > 0) {
+    // multiply res if exp is odd
+    if (exp % 2 == 1) {
+      res = res * base % mod;
+    }
+    // square the base if exp is even
+    exp /= 2;
+    base = base * base % mod;
+  }
+  return res;
+}
+```
 
 [back to top](#java)
 
