@@ -84,8 +84,7 @@ static class Reader {
         input = bi.read();
       }
       while (input >= '0' && input <= '9') {
-        output *= 10;
-        output += input - '0';
+        output = 10 * output + input - '0';
         input = bi.read();
       }
       return output * sign;
@@ -127,8 +126,7 @@ static class Reader {
           if (foundDecimal) {
             decimal *= 10;
           }
-          output *= 10;
-          output += input - '0';
+          output = 10 * output + input - '0';
         }
         input = bi.read();
       }
@@ -159,8 +157,7 @@ static class Reader {
       }
       // read the number
       while (input == '0' || input == '1') {
-        output <<= 1;
-        output |= input - '0';
+        output = (output << 1) | (input - '0');
         input = bi.read();
       }
       return output;
@@ -195,8 +192,7 @@ static class Reader {
       input = bi.read();
       // read the number
       while (input == '0' || input == '1') {
-        output <<= 1;
-        output |= input - '0';
+        output = (output << 1) | (input - '0');
         input = bi.read();
       }
       return output;
@@ -378,11 +374,11 @@ static int modPow(int base, int exp, int mod) {
   base %= mod;
   while (exp > 0) {
     // multiply res if exp is odd
-    if (exp % 2 == 1) {
+    if (exp & 1 == 1) {
       res = res * base % mod;
     }
     // square the base if exp is even
-    exp /= 2;
+    exp >>>= 1;
     base = base * base % mod;
   }
   return res;

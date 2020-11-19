@@ -128,10 +128,10 @@ def mod_pow(base: int, exp: int, mod: int) -> int:
     base %= mod
     while exp > 0:
         # multiply res if exp is odd
-        if exp % 2 == 1:
+        if exp & 1 == 1:
             res = res * base % mod
         # square the base if exp is even
-        exp //= 2
+        exp >>= 1
         base = base * base % mod
     return res
 ```
