@@ -222,13 +222,13 @@ It can greatly benefit from a fast prime check, to see if a number has any facto
  * Finds all prime factors of a number.
  *
  * @param num The number to prime factorize.
- * @return A list of factor, power pairs sorted by factor. {[factor, power],
- *         [factor, power], [factor, power],…}.
+ * @return A list of factors from least to greatest in array form: [factor,
+ *         power]
  */
 static List<int[]> primeFactors(int num) {
   List<int[]> factors = new LinkedList<>();
   // Return numbers that are too small
-  if (num <= 1) {
+  if (num < 4) {
     factors.add(new int[] { num, 1 });
     return factors;
   }
@@ -240,9 +240,12 @@ static List<int[]> primeFactors(int num) {
       num >>>= 1;
     } while ((num & 1) == 0);
     factors.add(new int[] { 2, power });
+    if (num == 1) {
+      return factors;
+    }
   }
   // num must be odd
-  for (int pf = 3; pf <= Math.sqrt(num); pf += 2) {
+  for (int pf = 3; pf < Math.sqrt(num + 1); pf += 2) {
     // while pf divides num, increment power and divide num
     if (num % pf == 0) {
       int power = 0;
@@ -251,12 +254,13 @@ static List<int[]> primeFactors(int num) {
         num /= pf;
       } while (num % pf == 0);
       factors.add(new int[] { pf, power });
+      if (num == 1) {
+        return factors;
+      }
     }
   }
-  // if num is a prime number greater than 2
-  if (num > 2) {
-    factors.add(new int[] { num, 1 });
-  }
+  // num is a prime number greater than 2
+  factors.add(new int[] { num, 1 });
   return factors;
 }
 ```

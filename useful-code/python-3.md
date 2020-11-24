@@ -7,6 +7,7 @@ I'm currently translating all of my Java code into Python, so there's not as muc
 ## <!-- omit in toc -->Contents
 
 - [Factoring](#factoring)
+  - [Prime Factorization](#prime-factorization)
   - [Prove Primality](#prove-primality)
   - [Miller-Rabin Primality Test](#miller-rabin-primality-test)
 - [Disjoint Sets Data Structure](#disjoint-sets-data-structure)
@@ -15,6 +16,58 @@ I'm currently translating all of my Java code into Python, so there's not as muc
   - [Fenwick Tree](#fenwick-tree)
 
 ## Factoring
+
+### Prime Factorization
+
+Repeatedly divides a given number to count the factors. Time-complexity is _O(n^0.5)_, where _n_ is the size of the factored number.
+
+It can greatly benefit from a fast prime check, to see if a number has any factors (see below).
+
+```python
+def prime_factors(num: int) -> list[tuple[int]]:
+    """Finds all prime factors of a number
+
+    Args:
+        num (int): The number to prime factorize.
+
+    Returns:
+        list[tuple[int]]: A list of factors from least to greatest in tuple form: (factor, power)
+    """
+
+    factors = []
+    # return numbers that are too small
+    if num < 4:
+        factors.append((num, 1))
+        return factors
+    # add the number of twos that divide num
+    if (num & 1) == 0:
+        power = 0
+        while (num & 1) == 0:
+            power += 1
+            num >>= 1
+        factors.append((2, power))
+        if num == 1:
+            return factors
+    # num must be odd
+    limit = num ** 0.5 + 1
+    pf = 3
+    while pf < limit:
+        if num % pf == 0:
+            power = 0
+            while num % pf == 0:
+                power += 1
+                num //= pf
+            factors.append((pf, power))
+            if num == 1:
+                return factors
+            limit = num ** 0.5 + 1
+        pf += 2
+    # num is a prime greater than 2
+    factors.append((num, 1))
+    return factors
+```
+
+[back to top](#python-3)
 
 ### Prove Primality
 
