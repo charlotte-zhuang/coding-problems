@@ -378,7 +378,7 @@ static int modPow(int base, int exp, int mod) {
   base %= mod;
   while (exp > 0) {
     // multiply res if exp is odd
-    if (exp & 1 == 1) {
+    if ((exp & 1) == 1) {
       res = res * base % mod;
     }
     // square the base if exp is even
