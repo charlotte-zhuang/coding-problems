@@ -7,6 +7,7 @@ I'm currently translating all of my Java code into Python, so there's not as muc
 ## <!-- omit in toc -->Contents
 
 - [Factoring](#factoring)
+  - [Greatest Common Divisor](#greatest-common-divisor)
   - [Prime Factorization](#prime-factorization)
   - [Prove Primality](#prove-primality)
   - [Miller-Rabin Primality Test](#miller-rabin-primality-test)
@@ -16,6 +17,31 @@ I'm currently translating all of my Java code into Python, so there's not as muc
   - [Fenwick Tree](#fenwick-tree)
 
 ## Factoring
+
+### Greatest Common Divisor
+
+[Source](https://en.wikipedia.org/wiki/Euclidean_algorithm)
+
+```python
+def gcd(a: int, b: int) -> int:
+    """Finds the greatest common divisor of two integers using the Euclidean
+        division algorithm.
+
+    Args:
+        a (int): The first integer.
+        b (int): The second integer.
+
+    Returns:
+        int: The GCD of a and b.
+    """
+
+    # a holds the last-last remainder of a % b
+    # b hold the last remainder of a % b
+    while b != 0:
+        a, b = b, a % b
+    # stop when a % b == 0
+    return a
+```
 
 ### Prime Factorization
 

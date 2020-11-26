@@ -207,9 +207,33 @@ static class Reader {
 
 ## Factoring
 
+Java's `BigInteger` class already has some of these algorithms.
+
 ### Greatest Common Divisor
 
-[Program to find GCD or HCF of two numbers - GeeksforGeeks](https://www.geeksforgeeks.org/c-program-find-gcd-hcf-two-numbers/)
+[Source](https://en.wikipedia.org/wiki/Euclidean_algorithm)
+
+```java
+/**
+ * Finds the greatest common divisor of two integers using the Euclidean
+ * division algorithm.
+ *
+ * @param a The first number.
+ * @param b The second number.
+ * @return The GCD of a and b.
+ */
+static int gcd(int a, int b) {
+  // a holds the last-last remainder of a % b
+  // b hold the last remainder of a % b
+  while (b != 0) {
+    int temp = b;
+    b = a % b;
+    a = temp;
+  }
+  // stop when a % b == 0
+  return a;
+}
+```
 
 ### Prime Factorization
 
