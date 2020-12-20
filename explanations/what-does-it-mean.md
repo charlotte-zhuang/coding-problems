@@ -27,7 +27,7 @@ A [Trie](https://www.geeksforgeeks.org/trie-insert-and-search/) is a tree where 
 
 ![trie image](embeds/what-does-it-mean/example-trie.drawio.svg)
 
-Since the input size for the problem is not too big, we can afford to be inefficient in how we keep track of our multiple paths—my pseudo-code uses a hash table. Dynamic programming can be used to make runtime linear to the length of the name; see [Aho-Corasick Algorithm for Pattern Searching](https://www.geeksforgeeks.org/aho-corasick-algorithm-pattern-searching/) for details.
+Since the input size for the problem is not too big, we can afford to be inefficient in how we keep track of our multiple paths—my pseudocode uses a hash table. Dynamic programming can be used to make runtime linear to the length of the name; see [Aho-Corasick Algorithm for Pattern Searching](https://www.geeksforgeeks.org/aho-corasick-algorithm-pattern-searching/) for details.
 
 ---
 

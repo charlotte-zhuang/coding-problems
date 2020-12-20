@@ -10,10 +10,10 @@ Dynamic Programming
   - [Sample Input](#sample-input)
   - [Min-Heights Array](#min-heights-array)
   - [Steps to build the array](#steps-to-build-the-array)
-  - [Min-Heights Array pseudo-code](#min-heights-array-pseudo-code)
+  - [Min-Heights Array Pseudocode](#min-heights-array-pseudocode)
 - [Constructing the optimal path](#constructing-the-optimal-path)
   - [Steps to find the path](#steps-to-find-the-path)
-  - [Find Path pseudo-code](#find-path-pseudo-code)
+  - [Find Path Pseudocode](#find-path-pseudocode)
 
 ## Overview
 
@@ -25,11 +25,11 @@ We’ll use a 2D array to store the minimum building heights for each climb at a
 ```ruby
 max_sum = 1000  # from problem
 num_climb
-climb_arr[]     # climb distances (starting index 1)
+climb_arr[]     # climb distances in the range [1..num_climb]
 
-min_heights[num_climb + 1][max_sum + 1]
-# row = climb index we are up to
-# col = height
+min_heights[][]
+# row = climb index we are up to in the range [0..num_climb + 1]
+# col = height in the range [0..max_sum + 1]
 # min_heights[row][col] = minimum height to get to that climb at that height
 ```
 
@@ -90,7 +90,7 @@ min_heights[num_climb + 1][max_sum + 1]
    - _(4,80)_  
      Climb up from (3,60), increasing MBH to 80.
 
-### Min-Heights Array pseudo-code
+### Min-Heights Array Pseudocode
 
 ```ruby
 # find min_heights
@@ -101,10 +101,10 @@ for row in 1..num_climb
     for col in 0..max_sum
         from_row = row - 1
         # try climbing down
-        from_col = col + climb_arr[col]
+        from_col = col + climb_arr[row]
         down_height = min_heights[from_row][from_col]
         # try climbing up (may increase height)
-        from_col = col + climb_arr[col]
+        from_col = col - climb_arr[row]
         up_height = max(min_heights[from_row][from_col], col)
         # keep minimum height
         min_heights[row][col] = min(down_height, up_height)
@@ -138,28 +138,27 @@ for row in 1..num_climb
    We could have climbed up from (0,0) or down from (0,40) to reach (1,20). Since (1,20) was never reached in our array, the only option is (0,0), which is our start.
 6. **Reverse the sequence to make it front-to-back**
 
-### Find Path pseudo-code
+### Find Path Pseudocode
 
 ```ruby
 if min_heights[num_climb][0] == max_sum
     return "IMPOSSIBLE"     # didn't reached the ground
-else
-    seq         # climb sequence
-    col = 0     # start on the ground
-    for row in num_climb..1
-        from_row = row - 1
-        down_col = col + climb_arr[row]
-        up_col = col - climb_arr[row]
-        down_height = climb_arr[from_row][down_col]
-        up_height = climb_arr[from_row][up_col]
-        # add the better path to seq and update col
-        if down_height < up_height
-            seq.add('D')
-            col = down_col
-        else
-            seq.add('U')
-            col = up_col
-    return seq.reverse()
+seq         # climb sequence (a deque or dynamic string would work)
+col = 0     # start on the ground
+for row in num_climb..1
+    from_row = row - 1
+    down_col = col + climb_arr[row]
+    up_col = col - climb_arr[row]
+    down_height = climb_arr[from_row][down_col]
+    up_height = climb_arr[from_row][up_col]
+    # add the better path to seq and update col
+    if down_height < up_height
+        seq.add('D')
+        col = down_col
+    else
+        seq.add('U')
+        col = up_col
+return seq.reverse()
 ```
 
 _special thanks to kadin_  

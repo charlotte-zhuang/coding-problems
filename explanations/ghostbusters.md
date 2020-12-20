@@ -8,10 +8,10 @@ Making a Forest with Disjoint Sets
 - [Modelling the problem](#modelling-the-problem)
 - [Overview](#overview)
 - [Constructing a Maximum Spanning Tree](#constructing-a-maximum-spanning-tree)
-  - [Kruskal's Algorithm pseudo-code](#kruskals-algorithm-pseudo-code)
+  - [Kruskal's Algorithm Pseudocode](#kruskals-algorithm-pseudocode)
   - [Disjoint Sets data structure](#disjoint-sets-data-structure)
 - [Constructing the Signal Graph](#constructing-the-signal-graph)
-- [Final pseudo-code](#final-pseudo-code)
+- [Final Pseudocode](#final-pseudocode)
 
 ## Modelling the problem
 
@@ -53,13 +53,10 @@ Notice, not all rows and columns are connected to each other; the problem's inpu
 
 The high-level steps we'll take to solve this problem are:
 
-- [Modelling the problem](#modelling-the-problem)
-- [Overview](#overview)
-- [Constructing a Maximum Spanning Tree](#constructing-a-maximum-spanning-tree)
-  - [Kruskal's Algorithm pseudo-code](#kruskals-algorithm-pseudo-code)
-  - [Disjoint Sets data structure](#disjoint-sets-data-structure)
-- [Constructing the Signal Graph](#constructing-the-signal-graph)
-- [Final pseudo-code](#final-pseudo-code)
+<!-- no toc -->
+1. [Construct the signal graph](#constructing-the-signal-graph)
+2. [Construct a maximum spanning tree for each connected sub-graph](#constructing-a-maximum-spanning-tree)
+3. [Output the resulting forest](#final-pseudo-code)
 
 I'll explain step 2 first, then go back to step 1.
 
@@ -69,7 +66,7 @@ There are many algorithms to construct a maximum/minimum spanning tree; I'll use
 
 The way Kruskal's algorithm works is by claiming that the maximum weight edge in a graph _must_ be in the maximum spanning tree (MST). So add that edge to the MST and repeat until all edges are used. To prevent cycles, only add an edge to the MST if it connects two disconnected sub-graphs.
 
-### Kruskal's Algorithm pseudo-code
+### Kruskal's Algorithm Pseudocode
 
 ```ruby
 edges     # all edges in the graph
@@ -96,7 +93,7 @@ The `parent` field is used to find a vertex's representative (the representative
 
 The `rank` field will keep the distance from the `parent` to the furthest child. When we union two sets, the representative with the lower `rank` will take on the other representative as its new `parent`, minimizing the rank of the union set's representative (which means the furthest child won't have to go as far to find its representative). If the two ranks are equal, then we have to increase the `rank` of the union set's representative by 1 (because the furthest child is now 1 more vertex away from its representative).
 
-#### Disjoint Sets pseudo-code
+#### Disjoint Sets Pseudocode
 
 ```ruby
 class Vertex
@@ -136,7 +133,7 @@ In our case, that means storing the keyboard's rows in the rows of the matrix, a
 
 Since the graph is bipartite, I find it easiest to have two arrays of vertices, one for the rows and one for the columns. We'll store in the arrays `Vertex` objects to keep track of which tree the `vertex` is in while building the maximal forest.
 
-## Final pseudo-code
+## Final Pseudocode
 
 ```ruby
 #---Input---#
