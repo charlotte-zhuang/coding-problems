@@ -124,7 +124,7 @@ if (child_node != nil)  # node is a valid path
         # multiply values by num_meanings and add to root
         path_meanings *= child_node.num_meanings
         path_meanings += next_table.get(root_node)
-        path_meanings % 1,000,000,007   # prevent overflow
+        path_meanings %= 1,000,000,007   # from problem to prevent overflow
         next_table.set(root_node, path_meanings)
 ```
 
