@@ -1,0 +1,23 @@
+# Example config file
+#
+# Format: <param> <value>
+#
+# This file can use any extension, just encode in UTF
+# 
+# To generate test data with this config, use the command 'gen example.txt'
+# in the heap app.
+#
+# Default values are used for unspecified parameters.
+
+name     test-name     # if omitted, defaults to the config filename, in
+                       # this case 'example.txt'
+
+size     10,000        # initial heap size
+op       10,000,000    # number of operations (add, decrease key, pop min)
+
+addfreq  1     # Weight given to add/decrease/pop operations
+decfreq  8     # The chance of each operation being chosen is weight / total,
+popfreq  1     # but an add operation is forced when the heap is empty.
+
+minval   -1,000,000,000
+maxval   1,000,000,000

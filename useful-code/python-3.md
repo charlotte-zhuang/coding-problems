@@ -315,7 +315,7 @@ class Trie:
                 crawl.children[child] = self.Node()
             crawl = crawl.children[child]
         # crawl is the last chr in pattern
-        crawl.end_node = True
+        crawl.isend = True
 
     def search(self, pattern: str) -> bool:
         """Finds a pattern in this trie.
@@ -336,9 +336,10 @@ class Trie:
                 return False
             crawl = crawl.children[child]
         # check if the last chr is in the pattern and is an end node
-        return crawl is not None and crawl.end_node
+        return crawl is not None and crawl.isend
 
-    def index(self, c: chr) -> int:
+    @staticmethod
+    def index(c: chr) -> int:
         """Determines the index of a chr in a children array.
 
         Args:
@@ -356,14 +357,14 @@ class Trie:
         Attributes:
             children (list[{Node, None}]): The characters that are children of
             this Node.
-            end_node (bool): Indicates if this Node is the end of a pattern.
+            isend (bool): Indicates if this Node is the end of a pattern.
         """
 
         def __init__(self) -> None:
             """Inits an empty Node."""
 
             self.children = [None] * Trie.ALPHABET_SIZE
-            self.end_node = False
+            self.isend = False
 ```
 
 [back to top](#python-3)
@@ -396,23 +397,6 @@ class Fenwick_Tree:
 
         self.values = [False] * size
         self.tree = [0] * (size + 1)
-
-    @classmethod
-    def from_list(cls, values: list[int]) -> object:
-        """Inits a fenwick tree from a list of values.
-
-        Args:
-            values (list[int]): The list of values to store in the tree.
-
-        Returns:
-            object: The fenwick tree.
-        """
-
-        fenwick_tree = cls(len(values))
-        # add all elements from values to the tree
-        for i, value in enumerate(values):
-            fenwick_tree.update(i, value)
-        return fenwick_tree
 
     def update(self, index: int, value: int) -> None:
         """Updates the value of an index.
