@@ -15,10 +15,10 @@ MAX_VAL = int(1e9)
 
 def random_test(
     test_data: Path,
-    size: int = 1000,
+    size: int = 0,
     op: int = 1000000,
     addfreq: int = 1,
-    decfreq: int = 8,
+    decfreq: int = 1,
     popfreq: int = 1,
     minval: int = MIN_VAL,
     maxval: int = MAX_VAL,
