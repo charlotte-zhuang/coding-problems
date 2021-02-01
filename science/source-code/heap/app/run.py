@@ -53,11 +53,11 @@ def fibonacci_time(testdata: Path) -> float:
     nodes = [None] * size
     np = 0
     for o in ops:
-        if o[0] == "a":
+        if o[0] == "d":
+            heap.decreasekey(nodes[o[1]], o[2])
+        elif o[0] == "a":
             nodes[np] = heap.add(o[1])
             np += 1
-        elif o[0] == "d":
-            heap.decreasekey(nodes[o[1]], o[2])
         else:
             heap.pop()
     stop = timeit.default_timer()
@@ -80,15 +80,15 @@ def binary_time(testdata: Path) -> float:
     arr = [None] * size
     np = 0
     for o in ops:
-        if o[0] == "a":
-            heapq.heappush(heap, (o[1], np))
-            arr[np] = o[1]
-            np += 1
-        elif o[0] == "d":
+        if o[0] == "d":
             arr[o[1]] = o[2]
             heapq.heappush(heap, (o[2], o[1]))
             while arr[heap[0][1]] != heap[0][0]:
                 heapq.heappop(heap)
+        elif o[0] == "a":
+            heapq.heappush(heap, (o[1], np))
+            arr[np] = o[1]
+            np += 1
         else:
             elem = heapq.heappop(heap)
             while arr[elem[1]] != elem[0]:
@@ -108,8 +108,8 @@ def read_operations(testdata: Path) -> tuple[int, list[tuple]]:
         tuple[int, list[tuple]]: First value is the number of add operations.
             Second value is a list of all commands in the following form:
 
-            ("a", key) add key
             ("d", index, amt) decrease key at the index by an amount
+            ("a", key) add key
             ("p") pop minimum
     """
 
@@ -118,11 +118,11 @@ def read_operations(testdata: Path) -> tuple[int, list[tuple]]:
     with testdata.open(mode="r") as dat:
         for line in dat:
             line = line.split()
-            if line[0] == "a":
+            if line[0] == "d":
+                ops.append(("d", int(line[1]), int(line[2])))
+            elif line[0] == "a":
                 ops.append(("a", int(line[1])))
                 add += 1
-            elif line[0] == "d":
-                ops.append(("d", int(line[1]), int(line[2])))
             else:
                 ops.append(("p"))
     return add, ops

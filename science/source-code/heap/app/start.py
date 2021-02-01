@@ -21,15 +21,15 @@ sys.path.append(str(Path(__file__).parent.parent.absolute()))
 import gen
 import run
 
-FILE_NAME_FILTER = re.compile("[^a-zA-Z0-9_\-]")
+FILE_NAME_FILTER = re.compile("[^a-z0-9_\-]")
 DATA_DIR = Path(__file__).parent.parent.absolute() / "data"
 CONFIG_DIR = Path(__file__).parent.parent.absolute() / "config"
 DEFAULT_OPTIONS = {
     "name": "default",
-    "size": 1000,
+    "size": 0,
     "op": 1000000,
     "addfreq": 1,
-    "decfreq": 8,
+    "decfreq": 1,
     "popfreq": 1,
     "minval": int(-1e9),
     "maxval": int(1e9),
@@ -50,17 +50,14 @@ def main():
     try:
         while True:
             args = input_command()
-            try:
-                if args[0] == "gen":
-                    gen_command(args)
-                elif args[0] == "run":
-                    run_command(args)
-                elif args[0] == "help":
-                    display_help(args)
-                else:
-                    print("Invalid command. Type 'help' to display all commands.")
-            except CancelException:
-                pass
+            if args[0] == "gen":
+                gen_command(args)
+            elif args[0] == "run":
+                run_command(args)
+            elif args[0] == "help":
+                display_help(args)
+            else:
+                print("Invalid command. Type 'help' to display all commands.")
     except ExitException:
         print("bye ^.^")
 
@@ -213,9 +210,9 @@ def display_test_data(
     print(
         "\n-----Test Composition-----\n"
         f"operations {total:,}\n"
-        f"add        {add / total:.2%}\n"
-        f"decrease   {dec / total:.2%}\n"
-        f"pop min    {pop / total:.2%}\n"
+        f"add        {add / total:.6%}\n"
+        f"decrease   {dec / total:.6%}\n"
+        f"pop min    {pop / total:.6%}\n"
         f"min value  {minval:,}\n"
         f"max value  {maxval:,}\n"
         f"--------------------------\n"
@@ -284,12 +281,6 @@ def read_config(file: Path) -> dict[str, any]:
 
 class ExitException(Exception):
     """When the user wants to exit the application."""
-
-    pass
-
-
-class CancelException(Exception):
-    """When the user wants to cancel a command."""
 
     pass
 

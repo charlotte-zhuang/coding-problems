@@ -2,7 +2,7 @@
 
 This is a work in progress to test the performance of different heap structures against each other.
 
-Initial testing suggests that binary heaps are by far the best priority queue for solving typical coding problems.
+Initial testing suggests that binary heaps are really good. With enough decrease key operations, pairing and Fibonacci heaps gain parity. Pairing heaps are consistently better than Fibonacci heaps.
 
 ## Heaps included
 

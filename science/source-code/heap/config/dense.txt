@@ -1,0 +1,5 @@
+name dense
+size 1000
+op 10000000
+addfreq 10
+decfreq 100000

@@ -56,16 +56,7 @@ def random_test(
         heapsize = size
         for _ in range(op):
             action = random.randint(0, totalfreq)
-            if action < popfreq and heapsize != 0:
-                # pop
-                elem = heapq.heappop(heap)
-                while arr[elem[1]] != elem[0]:
-                    elem = heapq.heappop(heap)
-                arr[elem[1]] = None
-                heapsize -= 1
-                dat.write("p\n")
-                pop += 1
-            elif action < popfreq + decfreq and heapsize != 0:
+            if action < decfreq and heapsize != 0:
                 # decrease key
                 key, i = random.choice(heap)
                 while arr[i] != key:
@@ -75,6 +66,15 @@ def random_test(
                 arr[i] = nk
                 dat.write(f"d {i} {nk}\n")
                 dec += 1
+            elif action < decfreq + popfreq and heapsize != 0:
+                # pop
+                elem = heapq.heappop(heap)
+                while arr[elem[1]] != elem[0]:
+                    elem = heapq.heappop(heap)
+                arr[elem[1]] = None
+                heapsize -= 1
+                dat.write("p\n")
+                pop += 1
             else:
                 # add
                 num = random.randint(minval, maxval)
