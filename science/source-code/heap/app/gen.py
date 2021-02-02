@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.9
+
 """Generate heap runtime tests.
 
 Attributes:
@@ -46,6 +48,18 @@ def random_test(
     add = 0
     dec = 0
     pop = 0
+
+    if popfreq < decfreq:
+
+        def rand_dec_choice():
+            i = random.randint(0, len(arr) - 1)
+            return arr[i], i
+
+    else:
+
+        def rand_dec_choice():
+            return random.choice(heap)
+
     with test_data.open(mode="w") as dat:
         for _ in range(size):
             num = random.randint(minval, maxval)
@@ -58,9 +72,9 @@ def random_test(
             action = random.randint(0, totalfreq)
             if action < decfreq and heapsize != 0:
                 # decrease key
-                key, i = random.choice(heap)
-                while arr[i] != key:
-                    key, i = random.choice(heap)
+                key, i = rand_dec_choice()
+                while not (arr[i] and arr[i] == key):
+                    key, i = rand_dec_choice()
                 nk = random.randint(minval, key)
                 heapq.heappush(heap, (nk, i))
                 arr[i] = nk

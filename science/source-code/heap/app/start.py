@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.9
+
 """Starts the heap runtime test CLI app.
 
 Example:

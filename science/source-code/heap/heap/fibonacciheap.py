@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.9
+
 from __future__ import annotations
 import math
 

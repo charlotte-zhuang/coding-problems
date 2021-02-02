@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.9
+
 """Conduct runtime tests on heaps."""
 
 import sys

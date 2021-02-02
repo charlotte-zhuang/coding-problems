@@ -12,14 +12,14 @@ Initial testing suggests that binary heaps are really good. With enough decrease
 
 ## Usage
 
-1. Install Python 3, [website](https://www.python.org)
-2. Run `heap/app/start.py` with Python
-
-Linux/Mac commands
+1. Install Python 3.9, [website](https://www.python.org)
+2. On Linux/Mac, give `heap/app/start.py` permission to execute with `chmod 755 <file>`
+3. Run `heap/app/start.py`
 
 ```zsh
 cd ./heap
-python3 ./app/start.py
+chmod 755 ./app/start.py  # On Linux/Mac
+./app/start.py
 ```
 
 ## About
