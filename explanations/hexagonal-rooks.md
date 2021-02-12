@@ -75,7 +75,7 @@ Two points lie on the same line in the following ways:
 
 ### Main function
 
-This implementation uses adding and subtracting 5 (the halfway point) to a row/column to find the maximum and minimum index. The count is incremented whenever a point is found that both the source and destination can reach, and that is neither the source nor destination.
+The maximum and minimum index can be found by adding and subtracting 5 (the halfway point) to a row/column. The count is incremented whenever a point is found that both the source and destination can reach, and is neither the source nor destination.
 
 ```ruby
 # main function
@@ -88,13 +88,13 @@ count = 0
 # vertical: row stays the same
 for r from max(s.c - MID, 0) to min(s.c + MID, LAST)
   p.r = r
-  p.c = c
+  p.c = s.c
   if r != s.r and can_reach(d, p)
   then count += 1
 
 # horizontal: column stays the same
 for c from max(s.r - MID, 0) to min(s.r + MID, LAST)
-  p.r = r
+  p.r = s.r
   p.c = c
   if c != s.c and can_reach(d, p)
   then count += 1
