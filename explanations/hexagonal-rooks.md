@@ -1,6 +1,6 @@
 # Hexagonal Rooks
 
-Parsing confusing input  
+Transforming confusing input  
 [The Problem](https://open.kattis.com/problems/hexagonalrooks)
 
 ## <!-- omit in toc -->Contents
