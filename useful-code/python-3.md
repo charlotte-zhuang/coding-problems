@@ -395,7 +395,7 @@ class Fenwick_Tree:
             size (int): The number of values in the tree.
         """
 
-        self.values = [False] * size
+        self.values = [0] * size
         self.tree = [0] * (size + 1)
 
     def update(self, index: int, value: int) -> None:
