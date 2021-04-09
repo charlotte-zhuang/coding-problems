@@ -63,13 +63,13 @@ To reduce repeating code, let's write a function to compute the next state of ei
 
 For clarity, I'm not going to do that. Below, `A = L` and `B = R`, or the other way around. Since some states of _A, B_ are inaccessible (we can't close 10 rooms on row 1), negative infinity will indicate no value (negative infinity plus anything is still negative infinity).
 
-```coffee
+```py
 # A[i][c] = maximum value up to row i after closing c rooms
 # i       = we're solving for row i+1
 # a, b    = room values in row i+1 on side A and B
 function solve_next_row(A, B, i, a, b)
     # solve for all c
-    for c = 1 upto A[i].length
+    for c = 1 upto A[i].length - 1
         open_both_from_A  = A[i][c] + a + b
         open_both_from_B  = B[i][c] + a + b
         open_one          = A[i][c-1] + a
@@ -82,7 +82,7 @@ function solve_next_row(A, B, i, a, b)
 
 We just need to solve for row _1_ up to row _N_, then our answer will be stored in the state array.
 
-```coffee
+```py
 # N       = number of rows
 # k       = rooms to close
 
